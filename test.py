@@ -1,4 +1,15 @@
+import random
 from pico2d import *
+
+class water_drop():
+    def __init__(self):
+        self.x, self.y = random.randint(0 ,700) , random.randint(300 ,600)
+        self.image = load_image('water_drop.png')
+    def update(self):
+        if self.y >= -300:
+            self.y -= 5
+    def draw(self):
+        self.image.clip_draw(0, 0, 1000, 1000, self.x, self.y, 50, 50)
 
 def handle_events():
     global running
@@ -38,13 +49,24 @@ frame = 0
 dir = 0
 dirud = 0
 
-open_canvas()
+
+open_canvas(600,600)
 map = load_image('main_map.png')
 eve = load_image('character_eevee.png')
 
+many_water = [water_drop() for i in range(30)]
+
 while running:
     clear_canvas()
-    map.draw(400,300,600,600)
+    map.draw(300, 300, 600, 600)
+
+    handle_events()
+
+    for water in many_water:
+        water.update()
+
+    for water in many_water:
+        water.draw()
 
     # 정지
     if dir == 0:
@@ -61,7 +83,7 @@ while running:
         frame = (frame + 1) % 3
 
     update_canvas()
-    handle_events()
+
 
     if x < 0:
         running = False
@@ -74,5 +96,6 @@ while running:
 
     y += dirud * 10
     x += dir * 10
+
     delay(0.1)
 
