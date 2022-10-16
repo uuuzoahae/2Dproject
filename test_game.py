@@ -1,6 +1,37 @@
 from pico2d import *
 import random
 
+class Map():
+    def __init__(self):
+        self.image = load_image('main_map.png')
+    def draw(self):
+        self.image.draw(300,300,600,600)
+class eevee():
+    def __init__(self):
+        self.x,self.y = 400, 300
+        self.dir = 0
+        self.dirud = 0
+        self.frame = 0
+        self.image = load_image('character_eevee.png')
+        self.right = load_image('character_eevee_right.png')
+    def update(self):
+        self.frame = (self.frame + 1) % 3
+        self.x += self.dir * 5
+        self.y += self.dirud * 5
+    def draw(self):
+
+        # 상하
+        if self.dir == 0 and self.dirud > 0:
+            self.image.clip_draw(78 + self.frame * 25, 80, 25, 25, self.x, self.y, 40, 40)
+
+        # 정지 또는 걷기
+        elif self.dir == 0:
+            self.image.clip_draw(78 + self.frame * 25, 187, 25, 25, self.x, self.y, 40, 40)
+        elif self.dir > 0:
+            self.right.clip_draw(7 + self.frame * 24, 0, 25, 25, self.x, self.y, 40, 40)
+        elif self.dir < 0:
+            self.image.clip_draw(77 + self.frame * 25, 160, 25, 25, self.x, self.y, 40, 40)
+
 def handle_events():
     global running
     global x, y
@@ -39,9 +70,10 @@ frame = 0
 dir = 0
 dirud = 0
 
-eve = eevee()
 
 open_canvas(600,600)
+map = Map()
+eve = eevee()
 
 while running:
     handle_events()
@@ -49,23 +81,7 @@ while running:
     map.draw()
     eve.draw()
     eve.update()
+
+    delay(0.1)
     update_canvas()
 
-    for water in many_water:
-        water.update()
-    for water in many_water:
-        water.draw()
-
-
-    if x < 0:
-        running = False
-    elif x > 800:
-        running = False
-    elif y < 0:
-        running = False
-    elif y > 600:
-        running = False
-
-    delay(0.01)
-
-close_canvas()

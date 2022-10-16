@@ -13,19 +13,26 @@ class eevee():
         self.dirud = 0
         self.frame = 0
         self.image = load_image('character_eevee.png')
+        self.right = load_image('character_eevee_right.png')
     def update(self):
         self.frame = (self.frame + 1) % 3
-        self.x += self.dir * 1
-        self.y += self.dirud * 1
+        self.x += self.dir * 5
+        self.y += self.dirud * 5
+
     def draw(self):
-        # 정지
-        if self.dir == 0:
-            self.image.clip_draw(self.frame * 20, 190, 25, 25, self.x, self.y, 40, 40)
-        # 걷기
+
+        # 상하
+        if self.dir == 0 and self.dirud > 0:
+            self.image.clip_draw(78 + self.frame * 25, 80, 25, 25, self.x, self.y, 40, 40)
+
+        # 정지 또는 걷기
+        elif self.dir == 0:
+            self.image.clip_draw(78 + self.frame * 25, 187, 25, 25, self.x, self.y, 40, 40)
         elif self.dir > 0:
-            self.image.clip_draw(80 + self.frame * 24, 190, 25, 25, self.x, self.y, 40, 40)
+            self.right.clip_draw(7 + self.frame * 24, 0, 25, 25, self.x, self.y, 40, 40)
         elif self.dir < 0:
-            self.image.clip_draw(70 + self.frame * 28, 160, 25, 25, self.x, self.y, 40, 40)
+            self.image.clip_draw(77 + self.frame * 25, 160, 25, 25, self.x, self.y, 40, 40)
+
 
 class water_drop():
     def __init__(self):
@@ -87,12 +94,15 @@ while running:
     clear_canvas()
     map.draw()
     eve.draw()
-    eve.update()
-    update_canvas()
+
     for water in many_water:
         water.draw()
+    eve.update()
     for water in many_water:
         water.update()
+
+    delay(0.1)
+    update_canvas()
     if x < 0:
         running = False
     elif x > 800:
