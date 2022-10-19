@@ -54,13 +54,21 @@ dir = None
 dirud = None
 many_water = None
 
+
+def water_fall():
+    global water, many_water
+    many_water = [water_drop() for i in range(30)]
+    for water in many_water:
+        water.update()
+    for water in many_water:
+        water.draw()
 def enter():
     global map, eve, water, running, dir, dirud, many_water
 
     map = Map()
     eve = eevee()
     water = water_drop()
-    many_water = [water_drop() for i in range(30)]
+    # many_water = [water_drop() for i in range(30)]
 
     running = True
     dir = 0
@@ -75,15 +83,16 @@ def exit():
 def update():
     global eve, many_water, water
     eve.update()
-    for water in many_water:
-        water.update()
+    # water_fall()
+    # for water in many_water:
+    #     water.update()
 
 def draw():
     clear_canvas()
     map.draw()
     eve.draw()
-    for water in many_water:
-        water.draw()
+    # for water in many_water:
+    #     water.draw()
     update_canvas()
 
 def handle_events():

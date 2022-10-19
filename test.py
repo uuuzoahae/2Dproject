@@ -35,15 +35,23 @@ class eevee():
 
 
 class water_drop():
+    time = 0.0
     def __init__(self):
         self.x, self.y = random.randint(0 ,700) , random.randint(300 ,600)
         self.image = load_image('water_drop.png')
     def update(self):
         if self.y >= -300:
             self.y -= 5
+        water_drop.time += 0.01
     def draw(self):
         self.image.clip_draw(0, 0, 1000, 1000, self.x, self.y, 50, 50)
-
+def water_fall():
+    global water, many_water
+    many_water = [water_drop() for i in range(30)]
+    for water in many_water:
+        water.update()
+    for water in many_water:
+        water.draw()
 def handle_events():
     global running
     global x, y
@@ -94,13 +102,10 @@ while running:
     clear_canvas()
     map.draw()
     eve.draw()
-
-    for water in many_water:
-        water.draw()
     eve.update()
-    for water in many_water:
-        water.update()
-
+    # water_fall()
+    if water_fall.time > 5:
+        water_fall()
     delay(0.1)
     update_canvas()
     if x < 0:
