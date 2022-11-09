@@ -42,16 +42,15 @@ class water_drop():
     def update(self):
         if self.y >= -300:
             self.y -= 5
-        water_drop.time += 0.01
+        water_drop.time += 0.1
     def draw(self):
         self.image.clip_draw(0, 0, 1000, 1000, self.x, self.y, 50, 50)
 def water_fall():
     global water, many_water
     many_water = [water_drop() for i in range(30)]
     for water in many_water:
-        water.update()
-    for water in many_water:
         water.draw()
+    delay(0.01)
 def handle_events():
     global running
     global x, y
@@ -103,9 +102,9 @@ while running:
     map.draw()
     eve.draw()
     eve.update()
-    # water_fall()
-    if water_fall.time > 5:
-        water_fall()
+    water_fall()
+    # if water_drop.time > 5:
+    #     water_fall()
     delay(0.1)
     update_canvas()
     if x < 0:
