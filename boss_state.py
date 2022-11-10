@@ -4,10 +4,17 @@ import game_framework
 boss_map = None
 running = None
 
+class Map():
+    def __init__(self):
+        self.image = load_image('boss_map.png')
+    def draw(self):
+        self.image.draw(300,300,600,600)
+
+
 def enter():
     global running, boss_map
     running = True
-    boss_map = load_image('boss_map.png')
+    boss_map = Map()
     pass
 
 def exit():
@@ -15,7 +22,7 @@ def exit():
 
 def draw():
     clear_canvas()
-    boss_map.draw(300,300,600,600)
+    boss_map.draw()
     update_canvas()
     pass
 
