@@ -36,9 +36,12 @@ class eevee():
 
 
 class water_drop():
+    image = None
     def __init__(self):
         self.x, self.y = random.randint(0 ,700) , random.randint(300 ,600)
-        self.image = load_image('water_drop.png')
+        # self.image = load_image('water_drop.png')
+        if water_drop.image == None:
+            water_drop.image = load_image('water_drop.png')
     def update(self):
         if self.y >= -300:
             self.y -= 5
@@ -55,13 +58,13 @@ dirud = None
 many_water = None
 
 
-def water_fall():
-    global water, many_water
-    many_water = [water_drop() for i in range(30)]
-    for water in many_water:
-        water.update()
-    for water in many_water:
-        water.draw()
+# def water_fall():
+# #     global water, many_water
+# #     many_water = [water_drop() for i in range(30)]
+# #     for water in many_water:
+# #         water.update()
+# #     for water in many_water:
+# #         water.draw()
 def enter():
     global map, eve, water, running, dir, dirud, many_water
 
@@ -75,7 +78,7 @@ def enter():
     dirud = 0
 
 def exit():
-    global map, eve, water
+    global map, eve, water, many_water
     del map
     del eve
     del water
