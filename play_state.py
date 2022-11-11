@@ -2,15 +2,6 @@ import random
 from pico2d import *
 import game_framework
 import title_state
-
-class Map():
-    def __init__(self):
-        self.image = load_image('main_map.png')
-    def draw(self):
-        self.image.draw(300,300,600,600)
-
-
-
 class water_drop():
     image = None
     def __init__(self):
