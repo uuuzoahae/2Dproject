@@ -21,7 +21,7 @@ eve = None
 water = None
 running = None
 dir = None
-dirud = None
+face_dir = None
 many_water = None
 
 
@@ -33,7 +33,7 @@ many_water = None
 # #     for water in many_water:
 # #         water.draw()
 def enter():
-    global map, eve, water, running, dir, dirud, many_water
+    global map, eve, water, running, dir, face_dir, many_water
 
     map = Map()
     eve = eevee()
@@ -42,7 +42,7 @@ def enter():
 
     running = True
     dir = 0
-    dirud = 0
+    face_dir = 1
 
 def exit():
     global map, eve, water, many_water
@@ -66,34 +66,38 @@ def draw():
     update_canvas()
 
 def handle_events():
-    global running
-    global dir, dirud
-
     events = get_events()
     for event in events:
         if event.type == SDL_QUIT:
             game_framework.quit()
-        elif event.type == SDL_KEYDOWN:
-            if event.key == SDLK_RIGHT:
-                eve.dir += 1
-            elif event.key == SDLK_LEFT:
-                eve.dir -= 1
-            elif event.key == SDLK_UP:
-                eve.dirud += 1
-            elif event.key == SDLK_DOWN:
-                eve.dirud -= 1
-            elif event.key == SDLK_ESCAPE:
-                game_framework.change_state(title_state)
-        elif event.type == SDL_KEYUP:
-            if event.key == SDLK_RIGHT:
-                eve.dir -= 1
-            elif event.key == SDLK_LEFT:
-                eve.dir += 1
-            elif event.key == SDLK_UP:
-                eve.dirud -= 1
-            elif event.key == SDLK_DOWN:
-                eve.dirud += 1
-    delay(0.1)
+        elif (event.type, event.key) == (SDL_KEYDOWN, SDLK_ESCAPE):
+            game_framework.quit()
+        else:
+            eve.handle_event(event)
+
+
+
+        # elif event.type == SDL_KEYDOWN:
+        #     if event.key == SDLK_RIGHT:
+        #         eve.dir += 1
+        #     elif event.key == SDLK_LEFT:
+        #         eve.dir -= 1
+        #     elif event.key == SDLK_UP:
+        #         eve.dirud += 1
+        #     elif event.key == SDLK_DOWN:
+        #         eve.dirud -= 1
+        #     elif event.key == SDLK_ESCAPE:
+        #         game_framework.change_state(title_state)
+        # elif event.type == SDL_KEYUP:
+        #     if event.key == SDLK_RIGHT:
+        #         eve.dir -= 1
+        #     elif event.key == SDLK_LEFT:
+        #         eve.dir += 1
+        #     elif event.key == SDLK_UP:
+        #         eve.dirud -= 1
+        #     elif event.key == SDLK_DOWN:
+        #         eve.dirud += 1
+        # delay(0.1)
 
 # open_canvas(600,600)
 #
