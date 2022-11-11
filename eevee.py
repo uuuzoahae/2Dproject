@@ -1,5 +1,29 @@
 from pico2d import *
 
+class IDLE:
+    @staticmethod
+    def enter():
+        pass
+    @staticmethod
+    def do():
+        pass
+    @staticmethod
+    def exit():
+        pass
+    @staticmethod
+    def draw():
+        pass
+
+class RUN:
+    def enter(self):
+        pass
+    def do(self):
+        pass
+    def exit(self):
+        pass
+    def draw(self):
+        pass
+    
 class Eve():
     def __init__(self):
         self.x,self.y = 300, 300
