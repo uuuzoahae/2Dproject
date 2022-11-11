@@ -1,7 +1,18 @@
 import random
 from pico2d import *
 import game_framework
-import title_state
+from eevee import Eve
+from map import Map
+
+map = None
+eve = None
+water = None
+running = None
+dir = None
+face_dir = None
+many_water = None
+
+
 class water_drop():
     image = None
     def __init__(self):
@@ -16,13 +27,6 @@ class water_drop():
         self.image.clip_draw(0, 0, 1000, 1000, self.x, self.y, 50, 50)
 
 
-map = None
-eve = None
-water = None
-running = None
-dir = None
-face_dir = None
-many_water = None
 
 
 # def water_fall():
@@ -36,7 +40,7 @@ def enter():
     global map, eve, water, running, dir, face_dir, many_water
 
     map = Map()
-    eve = eevee()
+    eve = Eve()
     water = water_drop()
     many_water = [water_drop() for i in range(30)]
 

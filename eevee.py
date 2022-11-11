@@ -1,6 +1,6 @@
 from pico2d import *
 
-class eevee():
+class Eve():
     def __init__(self):
         self.x,self.y = 300, 300
         self.dir = 0
@@ -28,15 +28,15 @@ class eevee():
     def handle_event(self, event):
         if event.type == SDL_KEYDOWN:
             match event.key:
-            case pico2d.SDLK_LEFT:
-            self.dir -= 1
-            case pico2d.SDLK_RIGHT:
-            self.dir += 1
+                case pico2d.SDLK_LEFT:
+                    self.dir -= 1
+                case pico2d.SDLK_RIGHT:
+                    self.dir += 1
         elif event.type == SDL_KEYUP:
             match event.key:
-            case SDLK_LEFT:
-            self.dir += 1
-            self.face_dir = -1
-            case SDLK_RIGHT:
-            self.dir -= 1
-            self.face_dir = 1
+                case pico2d.SDLK_LEFT:
+                    self.dir += 1
+                    self.face_dir = -1
+                case pico2d.SDLK_RIGHT:
+                    self.dir -= 1
+                    self.face_dir = 1
