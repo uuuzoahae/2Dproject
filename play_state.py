@@ -3,6 +3,7 @@ from pico2d import *
 import game_framework
 from eevee import Eve
 from map import Map
+from water_drop import Water_drop
 
 map = None
 eve = None
@@ -11,22 +12,6 @@ running = None
 dir = None
 face_dir = None
 many_water = None
-
-
-class water_drop():
-    image = None
-    def __init__(self):
-        self.x, self.y = random.randint(0 ,700) , random.randint(300 ,600)
-        # self.image = load_image('water_drop.png')
-        if water_drop.image == None:
-            water_drop.image = load_image('water_drop.png')
-    def update(self):
-        if self.y >= -300:
-            self.y -= 5
-    def draw(self):
-        self.image.clip_draw(0, 0, 1000, 1000, self.x, self.y, 50, 50)
-
-
 
 
 # def water_fall():
@@ -41,8 +26,8 @@ def enter():
 
     map = Map()
     eve = Eve()
-    water = water_drop()
-    many_water = [water_drop() for i in range(30)]
+    water = Water_drop()
+    many_water = [Water_drop() for i in range(30)]
 
     running = True
     dir = 0
@@ -57,7 +42,6 @@ def exit():
 def update():
     global eve, many_water, water
     eve.update()
-    # water_fall()
     for water in many_water:
         water.update()
 
@@ -78,6 +62,7 @@ def handle_events():
             game_framework.quit()
         else:
             eve.handle_event(event)
+    delay(0.1)
 
 
 
