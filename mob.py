@@ -32,11 +32,9 @@ class IDLE:
         self.frame = (self.frame + 1) % 2
         # self.dir = random.randint(0,1)
         # self.x += self.dir * 5
-        self.x = clamp(0, self.x, 800)
-        self.y = clamp(0, self.y, 600)
         pass
     def draw(self):
-        self.image.clip_draw(self.frame*30, 25, 32, 32, self.x, self.y)
+        self.image.clip_draw(self.frame*32, 25, 32, 32, self.x, self.y)
         pass
 
 class RUN:
@@ -59,7 +57,7 @@ class RUN:
 class Mob():
     image = None
     def __init__(self):
-        self.x, self.y = random.randint(400,600), random.randint(300,600)
+        self.x, self.y = random.randint(20,580), random.randint(20,600)
         self.dir = 0
         self.frame = 0
         if Mob.image == None:

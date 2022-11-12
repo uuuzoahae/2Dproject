@@ -14,6 +14,7 @@ dir = None
 face_dir = None
 many_water = None
 mob = None
+many_mob = None
 
 
 # def water_fall():
@@ -24,9 +25,9 @@ mob = None
 # #     for water in many_water:
 # #         water.draw()
 def enter():
-    global map, eve, water, running, dir, face_dir, many_water, mob
+    global map, eve, dir, face_dir, many_water, many_mob
 
-    mob = Mob()
+    many_mob = [Mob() for i in range(8)]
     map = Map()
     eve = Eve()
     water = Water_drop()
@@ -37,17 +38,18 @@ def enter():
     face_dir = 1
 
 def exit():
-    global map, eve, water, many_water, mob
+    global map, eve, water, many_water, many_mob
     del map
     del eve
     del water
-    del mob
-
+    del many_mob
 def update():
-    global eve, many_water, water, mob
+    global eve, many_water, water, mob, many_mob
     eve.update()
     # for water in many_water:
     #     water.update()
+    for mob in many_mob:
+        mob.update()
     mob.update()
 
 def draw():
@@ -56,7 +58,8 @@ def draw():
     eve.draw()
     # for water in many_water:
     #     water.draw()
-    mob.draw()
+    for mob in many_mob:
+        mob.draw()
     update_canvas()
 
 def handle_events():
