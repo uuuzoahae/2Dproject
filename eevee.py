@@ -113,7 +113,7 @@ class SLEEP:
         print("SLEEP EXIT")
         pass
     def draw(self):
-        self.image.clip_draw(432 + self.frame * 25, 190, 25, 25, self.x, self.y, 40, 40)
+        self.image.clip_draw(430 + self.frame * 30, 190, 28, 28, self.x-2, self.y-2, 43, 43)
         pass
 
 next_state = {
@@ -158,8 +158,13 @@ class Eve():
 
     def fire_ball(self):
         print('FIRE BALL')
-        ball = Ball(self.x, self.y, self.face_dir * 2)
-        game_world.add_object(ball, 1)
+        if self.dir == 1 or self.dir == -1:
+            ball = Ball(self.x, self.y, self.face_dir * 2)
+            game_world.add_object(ball, 1)
+        elif self.dirud == 1 or self.dirud == -1:
+            ball = Ball(self.x, self.y , self.face_dirud * 2)
+            game_world.add_object(ball, 1)
+
 
         # 상하
         # if self.dir == 0 and self.dirud > 0:
