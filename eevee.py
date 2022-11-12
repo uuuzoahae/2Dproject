@@ -67,6 +67,7 @@ class RUN:
         pass
     def exit(self, event):
         self.face_dir = self.dir
+        self.face_dirud = self.dirud
         print("RUN EXIT")
         if event == SPACE:
             self.fire_ball()
@@ -133,6 +134,7 @@ class Eve():
         self.dir = 0
         self.dirud = 0
         self.face_dir = 1
+        self.face_dirud = 1
         self.frame = 0
         self.image = load_image('character_eevee.png')
         self.right = load_image('character_eevee_right.png')

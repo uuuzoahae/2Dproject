@@ -6,6 +6,8 @@ from map import Map
 from water_drop import Water_drop
 from mob import Mob
 import game_world
+import title_state
+import boss_state
 
 map = None
 eve = None
@@ -87,7 +89,9 @@ def handle_events():
         if event.type == SDL_QUIT:
             game_framework.quit()
         elif (event.type, event.key) == (SDL_KEYDOWN, SDLK_ESCAPE):
-            game_framework.quit()
+            game_framework.change_state(title_state)
+        elif (event.type, event.key) == (SDL_KEYDOWN, SDLK_0 ):
+            game_framework.change_state(boss_state)
         else:
             eve.handle_event(event)
     delay(0.1)
