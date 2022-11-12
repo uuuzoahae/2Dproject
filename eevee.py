@@ -7,15 +7,21 @@ key_event_table = {
 (SDL_KEYDOWN, SDLK_UP) : UD, (SDL_KEYUP, SDLK_UP) : UU,
 (SDL_KEYDOWN, SDLK_DOWN) : DD, (SDL_KEYUP, SDLK_DOWN) : DU
 }
+
 class IDLE:
     @staticmethod
     def enter(self, event):
         print("ENTER IDLE")
         self.dir = 0
+        self.dirud = 0
+        self.timer = 1000
         pass
     @staticmethod
     def do(self):
         self.frame = (self.frame + 1) % 3
+        self.timer -= 100
+        if self.timer == 0:
+            self.add_event(TIMER)
         pass
     @staticmethod
     def exit(self):
@@ -30,6 +36,7 @@ class IDLE:
 class RUN:
     def enter(self, event):
         print("RUN ENTER")
+
         if event == RD:
             self.dir += 1
         elif event == LD:
@@ -59,14 +66,20 @@ class RUN:
         pass
     def draw(self):
 
-        if self.dir == 0 and self.dirud > 0:
-            self.image.clip_draw(78 + self.frame * 25, 80, 25, 25, self.x, self.y, 40, 40)
-        elif self.dir == 0:
-            self.image.clip_draw(78 + self.frame * 25, 187, 25, 25, self.x, self.y, 40, 40)
-        elif self.dir > 0:
+        # if self.dir == 0 and self.dirud > 0:
+        #     self.image.clip_draw(78 + self.frame * 25, 80, 25, 25, self.x, self.y, 40, 40)
+        # if self.dir == 0:
+        #     self.image.clip_draw(78 + self.frame * 25, 187, 25, 25, self.x, self.y, 40, 40)
+        if self.dir == 1:
             self.right.clip_draw(7 + self.frame * 24, 0, 25, 25, self.x, self.y, 40, 40)
-        elif self.dir < 0:
+            # self.image.clip_composite_draw(7 + self.frame*24, 0, 25, 25,
+            #                                0,'v',self.x,self.y, 40, 40)
+        elif self.dir == -1:
             self.image.clip_draw(77 + self.frame * 25, 160, 25, 25, self.x, self.y, 40, 40)
+        elif self.dirud == 1:
+            self.image.clip_draw(78 + self.frame * 25, 80, 25, 25, self.x, self.y, 40, 40)
+        elif self.dirud == -1:
+            self.image.clip_draw(78 + self.frame * 25, 187, 25, 25, self.x, self.y, 40, 40)
         pass
 
 class ATTACK:
@@ -79,10 +92,26 @@ class ATTACK:
     def draw(self):
         pass
 
+class SLEEP:
+    def enter(self, event):
+        self.dir = 0
+        self.dirud = 0
+        print("SLEEP ENTER")
+        pass
+    def do(self):
+        self.frame = ( 1 + self.frame) % 2
+        pass
+    def exit(self):
+        print("SLEEP EXIT")
+        pass
+    def draw(self):
+        self.image.clip_draw(432 + self.frame * 25, 190, 25, 25, self.x, self.y, 40, 40)
+        pass
 
 next_state = {
-IDLE: {RU: RUN, LU: RUN, RD: RUN, LD: RUN, UD: RUN, UU: RUN, DD: RUN, DU: RUN},
-RUN: {RU: IDLE, LU: IDLE, RD: IDLE, LD: IDLE, UD: IDLE, UU: IDLE, DD: IDLE, DU: IDLE}
+SLEEP: {RU: RUN, LU: RUN, RD: RUN, LD: RUN, UD: RUN, UU: RUN, DD: RUN, DU: RUN, TIMER:SLEEP},
+IDLE: {RU: RUN, LU: RUN, RD: RUN, LD: RUN, UD: RUN, UU: RUN, DD: RUN, DU: RUN, TIMER:SLEEP},
+RUN: {RU: IDLE, LU: IDLE, RD: IDLE, LD: IDLE, UD: IDLE, UU: IDLE, DD: IDLE, DU: IDLE, TIMER:RUN}
 }
 class Eve():
     def add_event(self, key_event):
