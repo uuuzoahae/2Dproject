@@ -37,16 +37,18 @@ def enter():
     face_dir = 1
 
 def exit():
-    global map, eve, water, many_water
+    global map, eve, water, many_water, mob
     del map
     del eve
     del water
+    del mob
 
 def update():
-    global eve, many_water, water
+    global eve, many_water, water, mob
     eve.update()
     for water in many_water:
         water.update()
+    mob.update()
 
 def draw():
     clear_canvas()
@@ -54,6 +56,7 @@ def draw():
     eve.draw()
     for water in many_water:
         water.draw()
+    mob.draw()
     update_canvas()
 
 def handle_events():
