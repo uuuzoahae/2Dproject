@@ -1,11 +1,13 @@
 from pico2d import *
-
-RD, LD, RU, LU, UD, UU, DD, DU, TIMER = range(9)
+import game_world
+from fire_ball import Ball
+RD, LD, RU, LU, UD, UU, DD, DU, TIMER, SPACE = range(10)
 key_event_table = {
 (SDL_KEYDOWN, SDLK_RIGHT): RD, (SDL_KEYDOWN, SDLK_LEFT): LD,
 (SDL_KEYUP, SDLK_RIGHT): RU, (SDL_KEYUP, SDLK_LEFT): LU,
 (SDL_KEYDOWN, SDLK_UP) : UD, (SDL_KEYUP, SDLK_UP) : UU,
-(SDL_KEYDOWN, SDLK_DOWN) : DD, (SDL_KEYUP, SDLK_DOWN) : DU
+(SDL_KEYDOWN, SDLK_DOWN) : DD, (SDL_KEYUP, SDLK_DOWN) : DU,
+(SDL_KEYDOWN, SDLK_SPACE) : SPACE
 }
 
 class IDLE:
@@ -24,8 +26,10 @@ class IDLE:
             self.add_event(TIMER)
         pass
     @staticmethod
-    def exit(self):
+    def exit(self, event):
         print("EXIT IDLE")
+        if event == SPACE:
+            self.fire_ball()
         pass
     @staticmethod
     def draw(self):
@@ -61,8 +65,11 @@ class RUN:
         self.x = clamp(0, self.x, 800)
         self.y = clamp(0, self.y, 600)
         pass
-    def exit(self):
+    def exit(self, event):
+        self.face_dir = self.dir
         print("RUN EXIT")
+        if event == SPACE:
+            self.fire_ball()
         pass
     def draw(self):
 
@@ -101,7 +108,7 @@ class SLEEP:
     def do(self):
         self.frame = ( 1 + self.frame) % 2
         pass
-    def exit(self):
+    def exit(self, event):
         print("SLEEP EXIT")
         pass
     def draw(self):
@@ -109,9 +116,9 @@ class SLEEP:
         pass
 
 next_state = {
-SLEEP: {RU: RUN, LU: RUN, RD: RUN, LD: RUN, UD: RUN, UU: RUN, DD: RUN, DU: RUN, TIMER:SLEEP},
-IDLE: {RU: RUN, LU: RUN, RD: RUN, LD: RUN, UD: RUN, UU: RUN, DD: RUN, DU: RUN, TIMER:SLEEP},
-RUN: {RU: IDLE, LU: IDLE, RD: IDLE, LD: IDLE, UD: IDLE, UU: IDLE, DD: IDLE, DU: IDLE, TIMER:RUN}
+SLEEP: {RU: RUN, LU: RUN, RD: RUN, LD: RUN, UD: RUN, UU: RUN, DD: RUN, DU: RUN, TIMER:SLEEP, SPACE:SLEEP},
+IDLE: {RU: RUN, LU: RUN, RD: RUN, LD: RUN, UD: RUN, UU: RUN, DD: RUN, DU: RUN, TIMER:SLEEP, SPACE:IDLE},
+RUN: {RU: IDLE, LU: IDLE, RD: IDLE, LD: IDLE, UD: IDLE, UU: IDLE, DD: IDLE, DU: IDLE, TIMER:RUN, SPACE:RUN}
 }
 class Eve():
     def add_event(self, key_event):
@@ -125,6 +132,7 @@ class Eve():
         self.x, self.y = 300, 300
         self.dir = 0
         self.dirud = 0
+        self.face_dir = 1
         self.frame = 0
         self.image = load_image('character_eevee.png')
         self.right = load_image('character_eevee_right.png')
@@ -136,7 +144,7 @@ class Eve():
         self.cur_state.do(self)
         if self.q:
             event = self.q.pop()
-            self.cur_state.exit(self)
+            self.cur_state.exit(self, event)
             self.cur_state = next_state[self.cur_state][event]
             self.cur_state.enter(self, event)
         # self.frame = (self.frame + 1) % 3
@@ -145,6 +153,11 @@ class Eve():
 
     def draw(self):
         self.cur_state.draw(self)
+
+    def fire_ball(self):
+        print('FIRE BALL')
+        ball = Ball(self.x, self.y, self.face_dir * 2)
+        game_world.add_object(ball, 1)
 
         # 상하
         # if self.dir == 0 and self.dirud > 0:

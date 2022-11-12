@@ -5,13 +5,11 @@ from eevee import Eve
 from map import Map
 from water_drop import Water_drop
 from mob import Mob
+import game_world
 
 map = None
 eve = None
 water = None
-running = None
-dir = None
-face_dir = None
 many_water = None
 mob = None
 many_mob = None
@@ -25,42 +23,63 @@ many_mob = None
 # #     for water in many_water:
 # #         water.draw()
 def enter():
-    global map, eve, dir, face_dir, many_water, many_mob
-
+    global map, eve, many_water, many_mob, water
     many_mob = [Mob() for i in range(8)]
     map = Map()
     eve = Eve()
     water = Water_drop()
     many_water = [Water_drop() for i in range(30)]
 
-    running = True
-    dir = 0
-    face_dir = 1
+    game_world.add_object(eve, 1)
+    game_world.add_object(map, 0)
+    game_world.add_objects(many_water,1)
+    game_world.add_objects(many_mob, 1)
+
+    # global map, eve, dir, face_dir, many_water, many_mob
+    #
+    # many_mob = [Mob() for i in range(8)]
+    # map = Map()
+    # eve = Eve()
+    # water = Water_drop()
+    # many_water = [Water_drop() for i in range(30)]
 
 def exit():
-    global map, eve, water, many_water, many_mob
-    del map
-    del eve
-    del water
-    del many_mob
+    game_world.clear()
+    # global map, eve, water, many_water, many_mob
+    # del map
+    # del eve
+    # del water
+    # del many_mob
 def update():
-    global eve, many_water, water, mob, many_mob
-    eve.update()
-    # for water in many_water:
-    #     water.update()
-    for mob in many_mob:
-        mob.update()
-    mob.update()
+    for game_object in game_world.all_objects():
+        game_object.update()
 
+    # global eve, many_water, water, mob, many_mob
+    # eve.update()
+    # # for water in many_water:
+    # #     water.update()
+    # for mob in many_mob:
+    #     mob.update()
+    # mob.update()
+
+def draw_world():
+    for game_object in game_world.all_objects():
+        game_object.draw()
 def draw():
     clear_canvas()
-    map.draw()
-    eve.draw()
-    # for water in many_water:
-    #     water.draw()
-    for mob in many_mob:
-        mob.draw()
+    draw_world()
     update_canvas()
+
+
+
+    # clear_canvas()
+    # map.draw()
+    # eve.draw()
+    # # for water in many_water:
+    # #     water.draw()
+    # for mob in many_mob:
+    #     mob.draw()
+    # update_canvas()
 
 def handle_events():
     events = get_events()
@@ -72,43 +91,20 @@ def handle_events():
         else:
             eve.handle_event(event)
     delay(0.1)
+def pause():
+    pass
+
+def resume():
+    pass
 
 
 
-        # elif event.type == SDL_KEYDOWN:
-        #     if event.key == SDLK_RIGHT:
-        #         eve.dir += 1
-        #     elif event.key == SDLK_LEFT:
-        #         eve.dir -= 1
-        #     elif event.key == SDLK_UP:
-        #         eve.dirud += 1
-        #     elif event.key == SDLK_DOWN:
-        #         eve.dirud -= 1
-        #     elif event.key == SDLK_ESCAPE:
-        #         game_framework.change_state(title_state)
-        # elif event.type == SDL_KEYUP:
-        #     if event.key == SDLK_RIGHT:
-        #         eve.dir -= 1
-        #     elif event.key == SDLK_LEFT:
-        #         eve.dir += 1
-        #     elif event.key == SDLK_UP:
-        #         eve.dirud -= 1
-        #     elif event.key == SDLK_DOWN:
-        #         eve.dirud += 1
-        # delay(0.1)
+def test_self():
+    import play_state
 
-# open_canvas(600,600)
-#
-#
-# enter()
-# while running:
-#     handle_events()
-#     update()
-#     delay(0.1)
-#     draw()
-#
-# exit()
-#
-# close_canvas()
+    pico2d.open_canvas()
+    game_framework.run(play_state)
+    pico2d.clear_canvas()
 
-
+if __name__ == '__main__':
+    test_self()
