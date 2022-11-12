@@ -46,16 +46,16 @@ def exit():
 def update():
     global eve, many_water, water, mob
     eve.update()
-    for water in many_water:
-        water.update()
+    # for water in many_water:
+    #     water.update()
     mob.update()
 
 def draw():
     clear_canvas()
     map.draw()
     eve.draw()
-    for water in many_water:
-        water.draw()
+    # for water in many_water:
+    #     water.draw()
     mob.draw()
     update_canvas()
 

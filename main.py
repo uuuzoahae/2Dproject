@@ -4,7 +4,7 @@ import logo_state
 import boss_state
 import play_state
 
-open_canvas(600,600)
+open_canvas()
 # game_framework.run(logo_state)
 # game_framework.run(boss_state)
 game_framework.run(play_state)
