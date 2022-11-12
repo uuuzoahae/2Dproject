@@ -4,6 +4,7 @@ import game_framework
 from eevee import Eve
 from map import Map
 from water_drop import Water_drop
+from mob import Mob
 
 map = None
 eve = None
@@ -12,6 +13,7 @@ running = None
 dir = None
 face_dir = None
 many_water = None
+mob = None
 
 
 # def water_fall():
@@ -22,8 +24,9 @@ many_water = None
 # #     for water in many_water:
 # #         water.draw()
 def enter():
-    global map, eve, water, running, dir, face_dir, many_water
+    global map, eve, water, running, dir, face_dir, many_water, mob
 
+    mob = Mob()
     map = Map()
     eve = Eve()
     water = Water_drop()
