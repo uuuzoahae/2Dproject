@@ -1,4 +1,6 @@
 from pico2d import *
+
+import game_framework
 import game_world
 from fire_ball import Ball
 RD, LD, RU, LU, UD, UU, DD, DU, TIMER, SPACE = range(10)
@@ -20,8 +22,9 @@ class IDLE:
         pass
     @staticmethod
     def do(self):
-        self.frame = (self.frame + 1) % 3
-        self.timer -= 100
+        # self.frame = (self.frame + 1) % 3
+        self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 3
+        self.timer -= 50
         if self.timer == 0:
             self.add_event(TIMER)
         pass
@@ -34,7 +37,7 @@ class IDLE:
     @staticmethod
     def draw(self):
         if self.dir == 0:
-            self.image.clip_draw(78 + self.frame * 25, 187, 25, 25, self.x, self.y, 40, 40)
+            self.image.clip_draw(78 + int(self.frame) * 25, 187, 25, 25, self.x, self.y, 40, 40)
         pass
 
 class RUN:
@@ -59,9 +62,10 @@ class RUN:
             self.dirud += 1
         pass
     def do(self):
-        self.frame = (self.frame + 1) % 3
-        self.x += self.dir * 5
-        self.y += self.dirud * 5
+        # self.frame = (self.frame + 1) % 3
+        self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 3
+        self.x += self.dir * RUN_SPEED_PPS * game_framework.frame_time
+        self.y += self.dirud * RUN_SPEED_PPS * game_framework.frame_time
         self.x = clamp(0, self.x, 800)
         self.y = clamp(0, self.y, 600)
         pass
@@ -79,15 +83,15 @@ class RUN:
         # if self.dir == 0:
         #     self.image.clip_draw(78 + self.frame * 25, 187, 25, 25, self.x, self.y, 40, 40)
         if self.dir == 1:
-            self.right.clip_draw(7 + self.frame * 24, 0, 25, 25, self.x, self.y, 40, 40)
+            self.right.clip_draw(7 + int(self.frame) * 24, 0, 25, 25, self.x, self.y, 40, 40)
             # self.image.clip_composite_draw(7 + self.frame*24, 0, 25, 25,
             #                                0,'v',self.x,self.y, 40, 40)
         elif self.dir == -1:
-            self.image.clip_draw(77 + self.frame * 25, 160, 25, 25, self.x, self.y, 40, 40)
+            self.image.clip_draw(77 + int(self.frame) * 25, 160, 25, 25, self.x, self.y, 40, 40)
         elif self.dirud == 1:
-            self.image.clip_draw(78 + self.frame * 25, 80, 25, 25, self.x, self.y, 40, 40)
+            self.image.clip_draw(78 + int(self.frame) * 25, 80, 25, 25, self.x, self.y, 40, 40)
         elif self.dirud == -1:
-            self.image.clip_draw(78 + self.frame * 25, 187, 25, 25, self.x, self.y, 40, 40)
+            self.image.clip_draw(78 + int(self.frame) * 25, 187, 25, 25, self.x, self.y, 40, 40)
         pass
 
 class ATTACK:
@@ -107,13 +111,15 @@ class SLEEP:
         print("SLEEP ENTER")
         pass
     def do(self):
-        self.frame = ( 1 + self.frame) % 2
+        # self.frame = ( 1 + self.frame) % 2
+        self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 2
         pass
     def exit(self, event):
         print("SLEEP EXIT")
         pass
     def draw(self):
-        self.image.clip_draw(430 + self.frame * 30, 190, 28, 28, self.x-2, self.y-2, 43, 43)
+        self.image.clip_draw(430 + int(self.frame) * 30, 190, 28, 28, self.x-2, self.y-2,43,43)
+        #43, 43)
         pass
 
 next_state = {
@@ -121,6 +127,16 @@ SLEEP: {RU: RUN, LU: RUN, RD: RUN, LD: RUN, UD: RUN, UU: RUN, DD: RUN, DU: RUN, 
 IDLE: {RU: RUN, LU: RUN, RD: RUN, LD: RUN, UD: RUN, UU: RUN, DD: RUN, DU: RUN, TIMER:SLEEP, SPACE:IDLE},
 RUN: {RU: IDLE, LU: IDLE, RD: IDLE, LD: IDLE, UD: IDLE, UU: IDLE, DD: IDLE, DU: IDLE, TIMER:RUN, SPACE:RUN}
 }
+
+PIXEL_PER_METER = (10.0 / 0.3)
+RUN_SPEED_KMPH = 5.0
+RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
+RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
+RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
+
+TIME_PER_ACTION = 0.5
+ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
+FRAMES_PER_ACTION = 3
 class Eve():
     def add_event(self, key_event):
         self.q.insert(0, key_event)
