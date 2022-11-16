@@ -56,6 +56,9 @@ def update():
     for game_object in game_world.all_objects():
         game_object.update()
 
+    for water in many_water:
+        if collide(eve, water):
+            print("COLLISION EVE: WATER")
     # global eve, many_water, water, mob, many_mob
     # eve.update()
     # # for water in many_water:
@@ -102,7 +105,15 @@ def resume():
     pass
 
 def collide(a, b):
-    pass
+    la, ba, ra, ta = a.get_bb()
+    lb, bb, rb, tb = b.get_bb()
+
+    if la > rb: return False
+    if ra < lb: return False
+    if ba > tb: return False
+    if ta < bb: return False
+
+    return True
 
 def test_self():
     import play_state
