@@ -184,6 +184,8 @@ class Eve():
     def get_bb(self):
         return self.x - 20, self.y - 20, self.x + 20, self.y + 20
 
+    def handle_collision(self, other, group):
+        pass
         # 상하
         # if self.dir == 0 and self.dirud > 0:
         #     self.image.clip_draw(78 + self.frame * 25, 80, 25, 25, self.x, self.y, 40, 40)

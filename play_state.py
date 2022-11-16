@@ -8,6 +8,8 @@ from mob import Mob
 import game_world
 import title_state
 import boss_state
+import time
+frame_time = 0.0
 
 map = None
 eve = None
@@ -25,18 +27,21 @@ many_mob = None
 # #     for water in many_water:
 # #         water.draw()
 def enter():
-    global map, eve, many_water, many_mob, water
+    global map, eve, many_water, many_mob, water, frame_time
     many_mob = [Mob() for i in range(8)]
     map = Map()
     eve = Eve()
     water = Water_drop()
     many_water = [Water_drop() for i in range(30)]
 
+    current_time = time.time()
+
     game_world.add_object(eve, 1)
     game_world.add_object(map, 0)
     game_world.add_objects(many_water,1)
     game_world.add_objects(many_mob, 1)
 
+    game_world.add_collision_pairs(eve, many_water, 'eve:water')
     # global map, eve, dir, face_dir, many_water, many_mob
     #
     # many_mob = [Mob() for i in range(8)]
@@ -56,11 +61,17 @@ def update():
     for game_object in game_world.all_objects():
         game_object.update()
 
-    for water in many_water.copy():
-        if collide(eve, water):
-            print("COLLISION EVE: WATER")
-            many_water.remove(water)
-            game_world.remove_object(water)
+    # for water in many_water.copy():
+    #     if collide(eve, water):
+    #         print("COLLISION EVE: WATER")
+    #         many_water.remove(water)
+    #         game_world.remove_object(water)
+
+    for a, b, group in game_world.all_collision_pairs():
+        if collide(a, b):
+            print('collision', group)
+            a.handle_collision(b, group)
+            b.handle_collision(a, group)
     # global eve, many_water, water, mob, many_mob
     # eve.update()
     # # for water in many_water:
