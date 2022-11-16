@@ -15,7 +15,7 @@ key_event_table = {
 class IDLE:
     @staticmethod
     def enter(self, event):
-        print("ENTER IDLE")
+        # print("ENTER IDLE")
         self.dir = 0
         self.dirud = 0
         self.timer = 1000
@@ -30,7 +30,7 @@ class IDLE:
         pass
     @staticmethod
     def exit(self, event):
-        print("EXIT IDLE")
+        # print("EXIT IDLE")
         if event == SPACE:
             self.fire_ball()
         pass
@@ -42,7 +42,7 @@ class IDLE:
 
 class RUN:
     def enter(self, event):
-        print("RUN ENTER")
+        # print("RUN ENTER")
 
         if event == RD:
             self.dir += 1
@@ -72,7 +72,7 @@ class RUN:
     def exit(self, event):
         self.face_dir = self.dir
         self.face_dirud = self.dirud
-        print("RUN EXIT")
+        # print("RUN EXIT")
         if event == SPACE:
             self.fire_ball()
         pass
@@ -108,14 +108,14 @@ class SLEEP:
     def enter(self, event):
         self.dir = 0
         self.dirud = 0
-        print("SLEEP ENTER")
+        # print("SLEEP ENTER")
         pass
     def do(self):
         # self.frame = ( 1 + self.frame) % 2
         self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 2
         pass
     def exit(self, event):
-        print("SLEEP EXIT")
+        # print("SLEEP EXIT")
         pass
     def draw(self):
         self.image.clip_draw(430 + int(self.frame) * 30, 190, 28, 28, self.x-2, self.y-2,43,43)

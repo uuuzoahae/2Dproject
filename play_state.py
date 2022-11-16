@@ -56,9 +56,11 @@ def update():
     for game_object in game_world.all_objects():
         game_object.update()
 
-    for water in many_water:
+    for water in many_water.copy():
         if collide(eve, water):
             print("COLLISION EVE: WATER")
+            many_water.remove(water)
+            game_world.remove_object(water)
     # global eve, many_water, water, mob, many_mob
     # eve.update()
     # # for water in many_water:
