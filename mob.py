@@ -1,13 +1,6 @@
 from pico2d import *
 import random
 
-# RD, LD, RU, LU, UD, UU, DD, DU, TIMER = range(9)
-# key_event_table = {
-# (SDL_KEYDOWN, SDLK_RIGHT): RD, (SDL_KEYDOWN, SDLK_LEFT): LD,
-# (SDL_KEYUP, SDLK_RIGHT): RU, (SDL_KEYUP, SDLK_LEFT): LU,
-# (SDL_KEYDOWN, SDLK_UP) : UD, (SDL_KEYUP, SDLK_UP) : UU,
-# (SDL_KEYDOWN, SDLK_DOWN) : DD, (SDL_KEYUP, SDLK_DOWN) : DU
-# }
 class IDLE:
     def enter(self):
         print('Mob Enter')
@@ -79,4 +72,8 @@ class Mob():
 
     def draw(self):
         self.cur_state.draw(self)
+        draw_rectangle(*self.get_bb())
         pass
+
+    def get_bb(self):
+        return self.x-15, self.y-15, self.x+15, self.y+15

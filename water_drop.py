@@ -14,3 +14,7 @@ class Water_drop():
         self.x -= random.randint(-5,5)
     def draw(self):
         self.image.clip_draw(0, 0, 1000, 1000, self.x, self.y, 50, 50)
+        draw_rectangle(*self.get_bb())
+
+    def get_bb(self):
+        return self.x-10, self.y-10, self.x+10, self.y+10

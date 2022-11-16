@@ -101,7 +101,8 @@ def pause():
 def resume():
     pass
 
-
+def collide(a, b):
+    pass
 
 def test_self():
     import play_state

@@ -171,6 +171,7 @@ class Eve():
 
     def draw(self):
         self.cur_state.draw(self)
+        draw_rectangle(*self.get_bb())
 
     def fire_ball(self):
         print('FIRE BALL')
@@ -180,7 +181,8 @@ class Eve():
         elif self.dirud == 1 or self.dirud == -1:
             ball = Ball(self.x, self.y , self.face_dirud * 2)
             game_world.add_object(ball, 1)
-
+    def get_bb(self):
+        return self.x - 10, self.y - 10, self.x + 10, self.y + 10
 
         # 상하
         # if self.dir == 0 and self.dirud > 0:
