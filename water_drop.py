@@ -17,4 +17,4 @@ class Water_drop():
         draw_rectangle(*self.get_bb())
 
     def get_bb(self):
-        return self.x-10, self.y-10, self.x+10, self.y+10
+        return self.x-15, self.y-25, self.x+15, self.y+25

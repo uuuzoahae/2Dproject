@@ -182,7 +182,7 @@ class Eve():
             ball = Ball(self.x, self.y , self.face_dirud * 2)
             game_world.add_object(ball, 1)
     def get_bb(self):
-        return self.x - 10, self.y - 10, self.x + 10, self.y + 10
+        return self.x - 20, self.y - 20, self.x + 20, self.y + 20
 
         # 상하
         # if self.dir == 0 and self.dirud > 0:
