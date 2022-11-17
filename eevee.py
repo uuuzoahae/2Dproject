@@ -1,5 +1,6 @@
 from pico2d import *
 
+from mob import Mob
 import game_framework
 import game_world
 from fire_ball import Ball
@@ -175,12 +176,16 @@ class Eve():
 
     def fire_ball(self):
         print('FIRE BALL')
+
         if self.dir == 1 or self.dir == -1:
-            ball = Ball(self.x, self.y, self.face_dir * 2)
+            ball = Ball(self.x, self.y, self.face_dir)
             game_world.add_object(ball, 1)
-        elif self.dirud == 1 or self.dirud == -1:
-            ball = Ball(self.x, self.y , self.face_dirud * 2)
-            game_world.add_object(ball, 1)
+            game_world.add_collision_pairs(None, ball, 'mob:ball')
+        # elif self.dirud == 1 or self.dirud == -1:
+        #     ball = Ball(self.x, self.y , self.face_dirud)
+        #     game_world.add_object(ball, 1)
+
+        # game_world.add_collision_pairs(mob, ball, 'mob:ball')
     def get_bb(self):
         return self.x - 10, self.y - 10, self.x + 10, self.y + 10
 

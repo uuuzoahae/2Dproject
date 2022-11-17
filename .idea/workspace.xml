@@ -7,9 +7,9 @@
     <list default="true" id="9dc9171a-0ebb-4bee-ae7e-86b08f9c5ed5" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/eevee.py" beforeDir="false" afterPath="$PROJECT_DIR$/eevee.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_framework.py" beforeDir="false" afterPath="$PROJECT_DIR$/game_framework.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fire_ball.py" beforeDir="false" afterPath="$PROJECT_DIR$/fire_ball.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mob.py" beforeDir="false" afterPath="$PROJECT_DIR$/mob.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/play_state.py" beforeDir="false" afterPath="$PROJECT_DIR$/play_state.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/water_drop.py" beforeDir="false" afterPath="$PROJECT_DIR$/water_drop.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

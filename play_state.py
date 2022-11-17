@@ -1,8 +1,10 @@
 import random
+import eevee
 from pico2d import *
 import game_framework
 from eevee import Eve
 from map import Map
+from fire_ball import Ball
 from water_drop import Water_drop
 from mob import Mob
 import game_world
@@ -17,9 +19,9 @@ water = None
 many_water = None
 mob = None
 many_mob = None
+Balls = None
 
-
-# def water_fall():
+# def water_fall()
 # #     global water, many_water
 # #     many_water = [water_drop() for i in range(30)]
 # #     for water in many_water:
@@ -42,6 +44,7 @@ def enter():
     #     game_world.add_objects(many_water, 1)
     #     print(' add objects water')
     game_world.add_collision_pairs(eve, many_water, 'eve:water')
+    game_world.add_collision_pairs(many_mob, None, 'mob:ball')
     # global map, eve, dir, face_dir, many_water, many_mob
     #
     # many_mob = [Mob() for i in range(8)]

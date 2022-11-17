@@ -1,6 +1,6 @@
 from pico2d import *
 import random
-
+import game_world
 class IDLE:
     def enter(self):
         print('Mob Enter')
@@ -77,3 +77,8 @@ class Mob():
 
     def get_bb(self):
         return self.x-15, self.y-15, self.x+15, self.y+15
+
+    def handle_collision(self, other, group):
+        if group == 'mob:ball':
+            game_world.remove_object(self)
+        pass
