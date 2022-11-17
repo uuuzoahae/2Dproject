@@ -34,13 +34,13 @@ def enter():
     water = Water_drop()
     many_water = [Water_drop() for i in range(30)]
 
-    current_time = time.time()
-
     game_world.add_object(eve, 1)
     game_world.add_object(map, 0)
     game_world.add_objects(many_water,1)
     game_world.add_objects(many_mob, 1)
-
+    # if game_framework.frame_time == 0:
+    #     game_world.add_objects(many_water, 1)
+    #     print(' add objects water')
     game_world.add_collision_pairs(eve, many_water, 'eve:water')
     # global map, eve, dir, face_dir, many_water, many_mob
     #
