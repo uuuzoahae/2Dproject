@@ -36,39 +36,24 @@ def enter():
     water = Water_drop()
     many_water = [Water_drop() for i in range(30)]
 
+    # 게임 오브젝트 추가
     game_world.add_object(eve, 1)
     game_world.add_object(map, 0)
     game_world.add_objects(many_water,1)
     game_world.add_objects(many_mob, 1)
-    # if game_framework.frame_time == 0:
-    #     game_world.add_objects(many_water, 1)
-    #     print(' add objects water')
+
+    # 게임 충돌처리 추가
     game_world.add_collision_pairs(eve, many_water, 'eve:water')
     game_world.add_collision_pairs(many_mob, None, 'mob:ball')
-    # global map, eve, dir, face_dir, many_water, many_mob
-    #
-    # many_mob = [Mob() for i in range(8)]
-    # map = Map()
-    # eve = Eve()
-    # water = Water_drop()
-    # many_water = [Water_drop() for i in range(30)]
+    game_world.add_collision_pairs(eve, None, 'eve:light')
+
 
 def exit():
     game_world.clear()
-    # global map, eve, water, many_water, many_mob
-    # del map
-    # del eve
-    # del water
-    # del many_mob
 def update():
     for game_object in game_world.all_objects():
         game_object.update()
-
-    # for water in many_water.copy():
-    #     if collide(eve, water):
-    #         print("COLLISION EVE: WATER")
-    #         many_water.remove(water)
-    #         game_world.remove_object(water)
+        
 
     for a, b, group in game_world.all_collision_pairs():
         if collide(a, b):
