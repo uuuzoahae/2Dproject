@@ -4,6 +4,7 @@ from pico2d import *
 import game_framework
 from eevee import Eve
 from map import Map
+from light import Light
 from fire_ball import Ball
 from water_drop import Water_drop
 from mob import Mob
@@ -33,19 +34,21 @@ def enter():
     many_mob = [Mob() for i in range(8)]
     map = Map()
     eve = Eve()
-    water = Water_drop()
-    many_water = [Water_drop() for i in range(30)]
+    # water = Water_drop()
+    # many_water = [Water_drop() for i in range(30)]
+    light = Light()
 
     # 게임 오브젝트 추가
     game_world.add_object(eve, 1)
     game_world.add_object(map, 0)
-    game_world.add_objects(many_water,1)
-    game_world.add_objects(many_mob, 1)
-
+    # game_world.add_objects(many_water,1)
+    # game_world.add_objects(many_mob, 1)
+    game_world.add_object(light,1)
     # 게임 충돌처리 추가
     game_world.add_collision_pairs(eve, many_water, 'eve:water')
     game_world.add_collision_pairs(many_mob, None, 'mob:ball')
-    game_world.add_collision_pairs(eve, None, 'eve:light')
+
+    game_world.add_collision_pairs(eve, light, 'eve:light')
 
 
 def exit():

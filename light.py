@@ -5,7 +5,7 @@ import game_framework
 
 class Light:
     image = None
-    def __init__(self, x, y, count):
+    def __init__(self, x=200, y=200, count=0):
         if Light.image == None:
             Light.image = load_image('light_piece.png')
 
@@ -28,7 +28,7 @@ class Light:
         pass
 
     def draw(self):
-        self.image.draw(self.x, self.y)
+        self.image.clip_draw(0,0,300,300,self.x,self.y,25,25)
         draw_rectangle(*self.get_bb())
         pass
 
@@ -38,4 +38,14 @@ class Light:
     def handle_collision(self, other, group):
         if group == "eve:light":
             self.count += 1
-        pass
+            game_world.remove_object(self)
+    def count_light(self):
+        if self.count == 0:
+            return 0
+        elif self.count == 1:
+            return 1
+        elif self.count == 2:
+            return 2
+        elif self.count == 3:
+            return 3
+
