@@ -1,4 +1,4 @@
-world = [] # 게임 월드의 정의
+# world = [] # 게임 월드의 정의
 
 objects = [[], []]
 
@@ -32,9 +32,10 @@ def all_objects():
 
 def clear():
     for o in all_objects():
+        # remove_collision_object(o)
         del o
-    for layer in objects():
-        layer.clear
+    for layer in objects:
+        layer.clear()
 
 def add_collision_pairs(a, b, group):
 

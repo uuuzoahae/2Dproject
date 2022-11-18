@@ -21,7 +21,7 @@ many_water = None
 mob = None
 many_mob = None
 Balls = None
-count = 0
+
 # def water_fall()
 # #     global water, many_water
 # #     many_water = [water_drop() for i in range(30)]
@@ -29,6 +29,18 @@ count = 0
 # #         water.update()
 # #     for water in many_water:
 # #         water.draw()
+
+def handle_events():
+    events = get_events()
+    for event in events:
+        if event.type == SDL_QUIT:
+            game_framework.quit()
+        elif (event.type, event.key) == (SDL_KEYDOWN, SDLK_ESCAPE):
+            game_framework.change_state(title_state)
+        else:
+            eve.handle_event(event)
+    delay(0.1)
+
 def enter():
     global map, eve, many_water, many_mob, water, frame_time, count
     many_mob = [Mob() for i in range(8)]
@@ -81,8 +93,6 @@ def draw():
     draw_world()
     update_canvas()
 
-
-
     # clear_canvas()
     # map.draw()
     # eve.draw()
@@ -92,18 +102,6 @@ def draw():
     #     mob.draw()
     # update_canvas()
 
-def handle_events():
-    events = get_events()
-    for event in events:
-        if event.type == SDL_QUIT:
-            game_framework.quit()
-        elif (event.type, event.key) == (SDL_KEYDOWN, SDLK_ESCAPE):
-            game_framework.change_state(title_state)
-        elif (event.type, event.key) == (SDL_KEYDOWN, SDLK_0 ):
-            game_framework.change_state(boss_state)
-        else:
-            eve.handle_event(event)
-    delay(0.1)
 def pause():
     pass
 
