@@ -53,7 +53,7 @@ def exit():
 def update():
     for game_object in game_world.all_objects():
         game_object.update()
-        
+
 
     for a, b, group in game_world.all_collision_pairs():
         if collide(a, b):
