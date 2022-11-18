@@ -23,13 +23,13 @@ boss_map = None
 
 
 def enter():
-    global map, eve, many_water, many_mob, water, frame_time, count
+    global boss_map, eve, many_water, water, frame_time
     boss_map = Boss_Map()
     eve = Eve()
 
     # 게임 오브젝트 추가
     game_world.add_object(eve, 1)
-    game_world.add_object(map, 0)
+    game_world.add_object(boss_map, 0)
 
     # 게임 충돌처리 추가
     game_world.add_collision_pairs(eve, many_water, 'eve:water')
@@ -72,15 +72,15 @@ def collide(a, b):
 
     return True
 
-def test_self():
-    import play_state
-
-    pico2d.open_canvas()
-    game_framework.run(play_state)
-    pico2d.clear_canvas()
-
-if __name__ == '__main__':
-    test_self()
+# def test_self():
+#     import play_state
+#
+#     pico2d.open_canvas()
+#     game_framework.run(play_state)
+#     pico2d.clear_canvas()
+#
+# if __name__ == '__main__':
+#     test_self()
 
 
 

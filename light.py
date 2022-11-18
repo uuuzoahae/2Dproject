@@ -14,9 +14,8 @@ class Light:
         pass
 
     def update(self):
-        # if Light.num == 0:
-            # print("light piece count +0")
-            # self.image.draw(500,600)
+        if Light.num == 3:
+            game_framework.change_state(boss_state)
         pass
 
     # def draw_light(self, light_num):
