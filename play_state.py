@@ -36,16 +36,16 @@ def enter():
     many_mob = [Mob() for i in range(8)]
     map = Map()
     eve = Eve()
-    # water = Water_drop()
-    # many_water = [Water_drop() for i in range(30)]
+    water = Water_drop()
+    many_water = [Water_drop() for i in range(30)]
     light = Light()
     many_light = [Light() for i in range(10)]
-    # count = light.count_light()
+
     # 게임 오브젝트 추가
     game_world.add_object(eve, 1)
     game_world.add_object(map, 0)
-    # game_world.add_objects(many_water,1)
-    # game_world.add_objects(many_mob, 1)
+    game_world.add_objects(many_water,1)
+    game_world.add_objects(many_mob, 1)
     game_world.add_objects(many_light,1)
     # 게임 충돌처리 추가
     game_world.add_collision_pairs(eve, many_water, 'eve:water')

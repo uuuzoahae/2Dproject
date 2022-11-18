@@ -16,9 +16,6 @@ class Light:
     def update(self):
         if Light.num == 3:
             game_framework.change_state(boss_state)
-        pass
-
-    # def draw_light(self, light_num):
 
     def draw(self):
         self.image.clip_draw(0,0,300,300,self.x,self.y,25,25)
