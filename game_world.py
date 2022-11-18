@@ -4,6 +4,7 @@ objects = [[], []]
 
 collision_group = dict()
 
+
 def add_object(o, depth):
     # world.append(o)
     objects[depth].append(o)
