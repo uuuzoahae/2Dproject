@@ -82,21 +82,6 @@ def collide(a, b):
 # if __name__ == '__main__':
 #     test_self()
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 def handle_events():
     events = get_events()
     for event in events:
@@ -106,4 +91,6 @@ def handle_events():
             game_framework.quit()
         elif (event.type, event.key) == (SDL_KEYDOWN, SDLK_0 ):
             game_framework.change_state(play_state)
+        else:
+            eve.handle_event(event)
     pass
