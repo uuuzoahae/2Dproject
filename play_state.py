@@ -11,8 +11,6 @@ from mob import Mob
 import game_world
 import title_state
 import boss_state
-import time
-frame_time = 0.0
 
 map = None
 eve = None
@@ -21,14 +19,6 @@ many_water = None
 mob = None
 many_mob = None
 Balls = None
-
-# def water_fall()
-# #     global water, many_water
-# #     many_water = [water_drop() for i in range(30)]
-# #     for water in many_water:
-# #         water.update()
-# #     for water in many_water:
-# #         water.draw()
 
 def handle_events():
     events = get_events()
@@ -77,14 +67,6 @@ def update():
             a.handle_collision(b, group)
             b.handle_collision(a, group)
 
-    # global eve, many_water, water, mob, many_mob
-    # eve.update()
-    # # for water in many_water:
-    # #     water.update()
-    # for mob in many_mob:
-    #     mob.update()
-    # mob.update()
-
 def draw_world():
     for game_object in game_world.all_objects():
         game_object.draw()
@@ -92,15 +74,6 @@ def draw():
     clear_canvas()
     draw_world()
     update_canvas()
-
-    # clear_canvas()
-    # map.draw()
-    # eve.draw()
-    # # for water in many_water:
-    # #     water.draw()
-    # for mob in many_mob:
-    #     mob.draw()
-    # update_canvas()
 
 def pause():
     pass
