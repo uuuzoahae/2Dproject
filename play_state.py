@@ -29,7 +29,6 @@ def handle_events():
             game_framework.change_state(title_state)
         else:
             eve.handle_event(event)
-    delay(0.1)
 
 def enter():
     global map, eve, many_water, many_mob, water, frame_time, count

@@ -26,21 +26,24 @@ class ATTACKED:
         self.frame = (self.frame + 1) % 2
         self.hp -= 50
         if self.hp == 0:
+            self.cur_state.exit(self)
             self.cur_state = DIED
+            self.cur_state.enter(self)
         pass
 
     def draw(self):
-        self.image.clip_draw(80 + self.frame * 32, 25, 32, 32, self.x, self.y)
+        self.image.clip_draw(80 + self.frame * 46, 27, 32, 32, self.x, self.y)
         pass
 class DIED:
     def enter(self):
-        print("died answer")
+        print("DIEDDIED ENTER")
 
     def exit(self):
-        print("died exit")
+        print("DIEDDIED EXIT")
         pass
 
     def do(self):
+        print("DIED DO")
         pass
 
     def draw(self):
@@ -84,9 +87,9 @@ class Mob():
 
     def handle_collision(self, other, group):
         if group == 'mob:ball':
-            self.cur_state.exit(self)
+            # self.cur_state.exit(self)
             self.cur_state = ATTACKED
-            self.cur_state.enter(self)
+            # self.cur_state.enter(self)
         # if group == 'mob:ball':
         #     game_world.remove_object(self)
         pass
