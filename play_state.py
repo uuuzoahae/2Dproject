@@ -89,12 +89,12 @@ def collide(a, b):
 
     return True
 
-def test_self():
-    import play_state
+# def test_self():
+#     import play_state
+#
+#     pico2d.open_canvas()
+#     game_framework.run(play_state)
+#     pico2d.clear_canvas()
 
-    pico2d.open_canvas()
-    game_framework.run(play_state)
-    pico2d.clear_canvas()
-
-if __name__ == '__main__':
-    test_self()
+# if __name__ == '__main__':
+#     test_self()

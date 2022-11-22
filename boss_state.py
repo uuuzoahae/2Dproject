@@ -22,8 +22,8 @@ water_eve = None
 def enter():
     global boss_map, eve, many_water, water, frame_time, water_eve
     boss_map = Boss_Map()
-
     water_eve = Water_Eve()
+
     # 게임 오브젝트 추가
     game_world.add_object(water_eve,1)
     game_world.add_object(boss_map, 0)

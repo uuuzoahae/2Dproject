@@ -5,13 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9dc9171a-0ebb-4bee-ae7e-86b08f9c5ed5" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/water_eevee.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/boss_state.py" beforeDir="false" afterPath="$PROJECT_DIR$/boss_state.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/character_fire.png" beforeDir="false" afterPath="$PROJECT_DIR$/character_fire.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/character_water.png" beforeDir="false" afterPath="$PROJECT_DIR$/character_water.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/eevee.py" beforeDir="false" afterPath="$PROJECT_DIR$/eevee.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/light.py" beforeDir="false" afterPath="$PROJECT_DIR$/light.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mob.py" beforeDir="false" afterPath="$PROJECT_DIR$/mob.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/play_state.py" beforeDir="false" afterPath="$PROJECT_DIR$/play_state.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

@@ -30,8 +30,7 @@ class IDLE:
         if self.timer == 0:
             self.add_event(TIMER)
         if Light.count == 3:
-            self.dir = 0
-            self.dirud = 0
+            game_world.clear()
             game_framework.change_state(boss_state)
         pass
     @staticmethod
@@ -68,15 +67,13 @@ class RUN:
             self.dirud += 1
         pass
     def do(self):
-        # self.frame = (self.frame + 1) % 3
         self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 3
         self.x += self.dir * RUN_SPEED_PPS * game_framework.frame_time
         self.y += self.dirud * RUN_SPEED_PPS * game_framework.frame_time
         self.x = clamp(0, self.x, 800)
         self.y = clamp(0, self.y, 600)
         if Light.count == 3:
-            self.dir = 0
-            self.dirud = 0
+            game_world.clear()
             game_framework.change_state(boss_state)
 
         pass
@@ -119,9 +116,9 @@ class SLEEP:
         # self.frame = ( 1 + self.frame) % 2
         self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 2
         if Light.count == 3:
-            self.dir = 0
-            self.dirud = 0
+            game_world.clear()
             game_framework.change_state(boss_state)
+
         pass
     def exit(self, event):
         # print("SLEEP EXIT")
@@ -200,33 +197,3 @@ class Eve():
             print(" ",Light.count)
             game_world.remove_object(other)
         pass
-        # 상하
-        # if self.dir == 0 and self.dirud > 0:
-        #     self.image.clip_draw(78 + self.frame * 25, 80, 25, 25, self.x, self.y, 40, 40)
-
-        # 정지 또는 걷기
-
-        # elif self.dir == 0:
-        #     self.image.clip_draw(78 + self.frame * 25, 187, 25, 25, self.x, self.y, 40, 40)
-        # elif self.dir > 0:
-        #     self.right.clip_draw(7 + self.frame * 24, 0, 25, 25, self.x, self.y, 40, 40)
-        # elif self.dir < 0:
-        #     self.image.clip_draw(77 + self.frame * 25, 160, 25, 25, self.x, self.y, 40, 40)
-
-
-
-    # def handle_event(self, event):
-    #     if event.type == SDL_KEYDOWN:
-    #         match event.key:
-    #             case pico2d.SDLK_LEFT:
-    #                 self.dir -= 1
-    #             case pico2d.SDLK_RIGHT:
-    #                 self.dir += 1
-    #     elif event.type == SDL_KEYUP:
-    #         match event.key:
-    #             case pico2d.SDLK_LEFT:
-    #                 self.dir += 1
-    #                 self.face_dir = -1
-    #             case pico2d.SDLK_RIGHT:
-    #                 self.dir -= 1
-    #                 self.face_dir = 1

@@ -16,6 +16,7 @@ class IDLE:
 
 class ATTACKED:
     def enter(self):
+        self.hp = 5000
         print("attcked enter")
 
     def exit(self):
@@ -58,7 +59,7 @@ class Mob():
         self.x, self.y = random.randint(20,580), random.randint(20,600)
         self.dir = 0
         self.frame = 0
-        self.hp = 100
+        self.hp = 500
         if Mob.image == None:
             Mob.image = load_image('magikarp.png')
 
@@ -87,9 +88,10 @@ class Mob():
 
     def handle_collision(self, other, group):
         if group == 'mob:ball':
-            # self.cur_state.exit(self)
+            self.cur_state.exit(self)
             self.cur_state = ATTACKED
-            # self.cur_state.enter(self)
+            self.cur_state.enter(self)
+            self.cur_state.do(self)
         # if group == 'mob:ball':
         #     game_world.remove_object(self)
         pass
