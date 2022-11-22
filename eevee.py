@@ -26,7 +26,7 @@ class IDLE:
     def do(self):
         # self.frame = (self.frame + 1) % 3
         self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 3
-        self.timer -= 50
+        self.timer -= 1
         if self.timer == 0:
             self.add_event(TIMER)
         if Light.count == 3:
