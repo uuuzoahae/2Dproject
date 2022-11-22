@@ -1,9 +1,10 @@
 from pico2d import *
 
-from mob import Mob
 import game_framework
 import game_world
+import boss_state
 from fire_ball import Ball
+from light import Light
 RD, LD, RU, LU, UD, UU, DD, DU, TIMER, SPACE = range(10)
 key_event_table = {
 (SDL_KEYDOWN, SDLK_RIGHT): RD, (SDL_KEYDOWN, SDLK_LEFT): LD,
@@ -28,6 +29,10 @@ class IDLE:
         self.timer -= 50
         if self.timer == 0:
             self.add_event(TIMER)
+        if Light.count == 3:
+            self.dir = 0
+            self.dirud = 0
+            game_framework.change_state(boss_state)
         pass
     @staticmethod
     def exit(self, event):
@@ -69,6 +74,11 @@ class RUN:
         self.y += self.dirud * RUN_SPEED_PPS * game_framework.frame_time
         self.x = clamp(0, self.x, 800)
         self.y = clamp(0, self.y, 600)
+        if Light.count == 3:
+            self.dir = 0
+            self.dirud = 0
+            game_framework.change_state(boss_state)
+
         pass
     def exit(self, event):
         self.face_dir = self.dir
@@ -79,14 +89,8 @@ class RUN:
         pass
     def draw(self):
 
-        # if self.dir == 0 and self.dirud > 0:
-        #     self.image.clip_draw(78 + self.frame * 25, 80, 25, 25, self.x, self.y, 40, 40)
-        # if self.dir == 0:
-        #     self.image.clip_draw(78 + self.frame * 25, 187, 25, 25, self.x, self.y, 40, 40)
         if self.dir == 1:
             self.right.clip_draw(7 + int(self.frame) * 24, 0, 25, 25, self.x, self.y, 40, 40)
-            # self.image.clip_composite_draw(7 + self.frame*24, 0, 25, 25,
-            #                                0,'v',self.x,self.y, 40, 40)
         elif self.dir == -1:
             self.image.clip_draw(77 + int(self.frame) * 25, 160, 25, 25, self.x, self.y, 40, 40)
         elif self.dirud == 1:
@@ -114,6 +118,10 @@ class SLEEP:
     def do(self):
         # self.frame = ( 1 + self.frame) % 2
         self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 2
+        if Light.count == 3:
+            self.dir = 0
+            self.dirud = 0
+            game_framework.change_state(boss_state)
         pass
     def exit(self, event):
         # print("SLEEP EXIT")
@@ -166,9 +174,6 @@ class Eve():
             self.cur_state.exit(self, event)
             self.cur_state = next_state[self.cur_state][event]
             self.cur_state.enter(self, event)
-        # self.frame = (self.frame + 1) % 3
-        # self.x += self.dir * 5
-        # self.y += self.dirud * 5
 
     def draw(self):
         self.cur_state.draw(self)
@@ -190,6 +195,10 @@ class Eve():
         return self.x - 10, self.y - 10, self.x + 10, self.y + 10
 
     def handle_collision(self, other, group):
+        if group == "eve:light":
+            Light.count += 1
+            print(" ",Light.count)
+            game_world.remove_object(other)
         pass
         # 상하
         # if self.dir == 0 and self.dirud > 0:

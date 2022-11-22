@@ -1,5 +1,4 @@
-import random
-import eevee
+
 from pico2d import *
 import game_framework
 from eevee import Eve
@@ -31,13 +30,12 @@ def handle_events():
             eve.handle_event(event)
 
 def enter():
-    global map, eve, many_water, many_mob, water, frame_time, count
+    global map, eve, many_water, many_mob, water, frame_time, count, light
     many_mob = [Mob() for i in range(8)]
     map = Map()
     eve = Eve()
     water = Water_drop()
     many_water = [Water_drop() for i in range(30)]
-    light = Light()
     many_light = [Light() for i in range(10)]
 
     # 게임 오브젝트 추가

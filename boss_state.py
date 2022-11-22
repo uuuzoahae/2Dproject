@@ -1,14 +1,11 @@
-
+from pico2d import *
 import game_framework
 import random
-import eevee
-
-from pico2d import *
-from eevee import Eve
+import light
+from water_eevee import Water_Eve
 from boss_map import Boss_Map
 from water_drop import Water_drop
 import game_world
-import boss_state
 import play_state
 import time
 
@@ -20,19 +17,19 @@ many_water = None
 mob = None
 many_mob = None
 boss_map = None
-
+water_eve = None
 
 def enter():
-    global boss_map, eve, many_water, water, frame_time
+    global boss_map, eve, many_water, water, frame_time, water_eve
     boss_map = Boss_Map()
-    eve = Eve()
 
+    water_eve = Water_Eve()
     # 게임 오브젝트 추가
-    game_world.add_object(eve, 1)
+    game_world.add_object(water_eve,1)
     game_world.add_object(boss_map, 0)
 
     # 게임 충돌처리 추가
-    game_world.add_collision_pairs(eve, many_water, 'eve:water')
+    game_world.add_collision_pairs(water_eve, many_water, 'water_eve:water')
 
 def exit():
     game_world.clear()
@@ -60,7 +57,6 @@ def pause():
 
 def resume():
     pass
-
 def collide(a, b):
     la, ba, ra, ta = a.get_bb()
     lb, bb, rb, tb = b.get_bb()
@@ -92,5 +88,5 @@ def handle_events():
         elif (event.type, event.key) == (SDL_KEYDOWN, SDLK_0 ):
             game_framework.change_state(play_state)
         else:
-            eve.handle_event(event)
+            water_eve.handle_event(event)
     pass
