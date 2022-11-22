@@ -8,7 +8,7 @@ class Light:
     image = None
     def __init__(self, x=200, y=200, count=0):
         if Light.image == None:
-            Light.image = load_image('light_piece.png')
+            Light.image = load_image('img/light_piece.png')
 
         self.x, self.y, Light.count = random.randint(300,600), random.randint(300,500), 0
         pass

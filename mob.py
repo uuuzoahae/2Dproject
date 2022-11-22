@@ -61,7 +61,7 @@ class Mob():
         self.frame = 0
         self.hp = 500
         if Mob.image == None:
-            Mob.image = load_image('magikarp.png')
+            Mob.image = load_image('img/magikarp.png')
 
         self.q = []
         self.cur_state = IDLE

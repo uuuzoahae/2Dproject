@@ -5,35 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9dc9171a-0ebb-4bee-ae7e-86b08f9c5ed5" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/boss_map.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/character_eevee.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/character_eevee_right.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/character_fire.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/character_light.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/character_water.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/boss_map.py" beforeDir="false" afterPath="$PROJECT_DIR$/boss_map.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/eevee.py" beforeDir="false" afterPath="$PROJECT_DIR$/eevee.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fire_attack.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gyarados.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/boss_character.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/boss_map.png" beforeDir="false" afterPath="$PROJECT_DIR$/img/boss_map.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/character_Flareon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/character_Jolteon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/character_Vaporeon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/main_character.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/light_piece.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logo_state_mygame.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/magikarp.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main_map.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pink_fire.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pink_fire2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_game.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/title.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/water_attack.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/water_attack2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/water_drop.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/water_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fire_ball.py" beforeDir="false" afterPath="$PROJECT_DIR$/fire_ball.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/light.py" beforeDir="false" afterPath="$PROJECT_DIR$/light.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logo.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logo_state.py" beforeDir="false" afterPath="$PROJECT_DIR$/logo_state.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/map.py" beforeDir="false" afterPath="$PROJECT_DIR$/map.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mob.py" beforeDir="false" afterPath="$PROJECT_DIR$/mob.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/title_state.py" beforeDir="false" afterPath="$PROJECT_DIR$/title_state.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/water_drop.py" beforeDir="false" afterPath="$PROJECT_DIR$/water_drop.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/water_eevee.py" beforeDir="false" afterPath="$PROJECT_DIR$/water_eevee.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -158,8 +158,8 @@ class Eve():
         self.face_dir = 1
         self.face_dirud = 1
         self.frame = 0
-        self.image = load_image('character_eevee.png')
-        self.right = load_image('character_eevee_right.png')
+        self.image = load_image('img/character_eevee.png')
+        self.right = load_image('img/character_eevee_right.png')
 
         self.q = []
         self.cur_state = IDLE

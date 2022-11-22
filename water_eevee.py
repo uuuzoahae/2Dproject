@@ -127,7 +127,7 @@ class Water_Eve():
         self.dir = 0
         self.dirud = 0
         self.frame = 0
-        self.image = load_image('character_water.png')
+        self.image = load_image('img/character_water.png')
 
         self.q = []
         self.cur_state = IDLE

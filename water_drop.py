@@ -20,7 +20,7 @@ class Water_drop():
         self.x, self.y = random.randint(0 ,700) , random.randint(300 ,600)
         # self.image = load_image('water_drop.png')
         if Water_drop.image == None:
-            Water_drop.image = load_image('water_drop.png')
+            Water_drop.image = load_image('img/water_drop.png')
     def update(self):
         if self.y >= -300:
             self.y -= RUN_SPEED_PPS * game_framework.frame_time

@@ -10,7 +10,7 @@ def enter():
     global logo_image, running, logo_time
     running = True
     logo_time = 0.0
-    logo_image = load_image('logo.jpg')
+    logo_image = load_image('img/logo.jpg')
     pass
 
 def update():

@@ -6,7 +6,7 @@ class Ball:
 
     def __init__(self, x , y , velocity):
         if Ball.image == None:
-            Ball.image = load_image('fire_attack.png')
+            Ball.image = load_image('img/fire_attack.png')
         self.x, self.y, self.velocity = x, y, velocity
 
     def draw(self):
