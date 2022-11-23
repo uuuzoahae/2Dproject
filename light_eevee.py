@@ -13,15 +13,16 @@ class IDLE:
     @staticmethod
     def do(self):
         self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 2
-        # if self.timer == 0:
-        #     self.add_event(TIMER)
+        self.timer -= 1
+        if self.timer == 0:
+            self.add_event(TIMER)
         pass
     @staticmethod
     def exit(self, event):
         pass
     @staticmethod
     def draw(self):
-        self.image.clip_draw(int(self.frame), 149, 30, 34, self.x + 3, self.y + 3)
+        self.image.clip_draw(362+ int(self.frame) * 30, 149, 30, 34, self.x, self.y + 2)
         pass
 
 
