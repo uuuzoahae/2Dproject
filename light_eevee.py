@@ -64,15 +64,15 @@ class RUN:
         # self.image.clip_draw(int(self.frame), 149, 30, 34, self.x + 3, self.y + 3)
 
         if self.dir == 1:
-            self.image.clip_composite_draw(55 + int(self.frame) * 33, 88, 31, 31, 0, 'h', self.x, self.y + 2, 35, 35)
+            self.image.clip_composite_draw(55 + int(self.frame) * 33, 88, 31, 31, 0, 'h', self.x, self.y + 3, 35, 35)
             # self.right.clip_draw(7 + int(self.frame) * 24, 0, 25, 25, self.x, self.y, 40, 40)
         elif self.dir == -1:
-            self.image.clip_draw(55 + int(self.frame) * 33, 88, 31, 31, self.x, self.y + 2, 35, 35)
+            self.image.clip_draw(55 + int(self.frame) * 33, 88, 31, 31, self.x, self.y + 3, 35, 35)
             pass
         elif self.dirud == 1:
-            self.image.clip_draw(54 + int(self.frame) * 25, 26, 28, 34, self.x, self.y)
+            self.image.clip_draw(54 + int(self.frame) * 25, 26, 28, 34, self.x, self.y + 5, 35, 35)
         elif self.dirud == -1:
-            self.image.clip_draw(60 + int(self.frame) * 25, 149, 26, 34, self.x, self.y)
+            self.image.clip_draw(60 + int(self.frame) * 25, 149, 26, 34, self.x, self.y + 2,33,33)
         pass
 
 # class ATTACK:
