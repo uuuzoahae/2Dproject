@@ -6,7 +6,7 @@ image = None
 class IDLE:
     @staticmethod
     def enter(self, event):
-        event = None
+        print('enter light IDLE')
         self.dir = 0
         self.dirud = 0
         self.timer = 1000
@@ -20,6 +20,7 @@ class IDLE:
         pass
     @staticmethod
     def exit(self, event):
+        print('exit light IDLE')
         pass
     @staticmethod
     def draw(self):
@@ -29,7 +30,7 @@ class IDLE:
 
 class RUN:
     def enter(self, event):
-
+        print('enter light RUN')
         if event == RD:
             self.dir += 1
         elif event == LD:
@@ -59,6 +60,7 @@ class RUN:
         # self.face_dirud = self.dirud
         # if event == SPACE:
         #     self.fire_ball()
+        print('exit light RUN')
         pass
     def draw(self):
 
@@ -141,7 +143,7 @@ class Light_Eve():
         self.dirud = 0
         self.frame = 0
         self.image = load_image('img/character_light.png')
-
+        self.name = 'LIGHT'
         self.q = []
         self.cur_state = IDLE
         self.cur_state.enter(self, None)

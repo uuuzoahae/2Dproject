@@ -4,6 +4,7 @@ import random
 import light
 from water_eevee import Water_Eve
 from boss_map import Boss_Map
+from light_eevee import Light_Eve
 from water_drop import Water_drop
 import game_world
 import play_state
@@ -18,14 +19,23 @@ mob = None
 many_mob = None
 boss_map = None
 water_eve = None
-
+light_eve = None
+random_eve = None
 def enter():
-    global boss_map, eve, many_water, water, frame_time, water_eve
+    global boss_map, eve, many_water, water, frame_time, water_eve, light_eve, random_eve
     boss_map = Boss_Map()
     water_eve = Water_Eve()
+    light_eve = Light_Eve()
+
+    random_eve = random.choice([water_eve, light_eve])
+
+    print('random_eve =  ', type(random_eve))
 
     # 게임 오브젝트 추가
-    game_world.add_object(water_eve,1)
+    if random_eve.name == 'WATER':
+        game_world.add_object(water_eve,1)
+    elif random_eve.name == 'LIGHT':
+        game_world.add_object(light_eve,1)
     game_world.add_object(boss_map, 0)
 
     # 게임 충돌처리 추가
@@ -79,6 +89,8 @@ def collide(a, b):
 #     test_self()
 
 def handle_events():
+    global random_eve
+
     events = get_events()
     for event in events:
         if event.type == SDL_QUIT:
@@ -88,5 +100,5 @@ def handle_events():
         elif (event.type, event.key) == (SDL_KEYDOWN, SDLK_0 ):
             game_framework.change_state(play_state)
         else:
-            water_eve.handle_event(event)
+            random_eve.handle_event(event)
     pass

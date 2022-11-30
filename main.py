@@ -7,6 +7,6 @@ import title_state
 
 open_canvas(600,600)
 # game_framework.run(logo_state)
-# game_framework.run(boss_state)
-game_framework.run(title_state)
+game_framework.run(boss_state)
+# game_framework.run(title_state)
 close_canvas()

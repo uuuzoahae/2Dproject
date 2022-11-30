@@ -13,11 +13,13 @@ class IDLE:
     def do(self):
         self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 2
         self.timer -= 1
-        # if self.timer == 0:
-        #     self.add_event(TIMER)
+        if self.timer == 0:
+            self.add_event(TIMER)
         pass
     def exit(self, event):
         print('exit water IDLE')
+        if event == SPACE:
+            self.fire_ball()
         pass
     def draw(self):
         self.image.clip_draw(int(self.frame), 149, 30, 34, self.x + 3, self.y + 3)
@@ -55,8 +57,8 @@ class RUN:
     def exit(self, event):
         # self.face_dir = self.dir
         # self.face_dirud = self.dirud
-        # if event == SPACE:
-        #     self.fire_ball()
+        if event == SPACE:
+            self.fire_ball()
         pass
     def draw(self):
         if self.dir == 1:
@@ -87,18 +89,19 @@ class SLEEP:
         self.image.clip_draw(380 + int(self.frame) * 35, 149, 35, 37, self.x + 1, self.y - 2)
         pass
 
-RD, LD, RU, LU, UD, UU, DD, DU, TIMER, = range(9)
+RD, LD, RU, LU, UD, UU, DD, DU, TIMER, SPACE = range(10)
 key_event_table = {
 (SDL_KEYDOWN, SDLK_RIGHT): RD, (SDL_KEYDOWN, SDLK_LEFT): LD,
 (SDL_KEYUP, SDLK_RIGHT): RU, (SDL_KEYUP, SDLK_LEFT): LU,
 (SDL_KEYDOWN, SDLK_UP) : UD, (SDL_KEYUP, SDLK_UP) : UU,
-(SDL_KEYDOWN, SDLK_DOWN) : DD, (SDL_KEYUP, SDLK_DOWN) : DU
+(SDL_KEYDOWN, SDLK_DOWN) : DD, (SDL_KEYUP, SDLK_DOWN) : DU,
+(SDL_KEYDOWN, SDLK_SPACE) : SPACE
 }
 
 next_state = {
-SLEEP: {RU: RUN, LU: RUN, RD: RUN, LD: RUN, UD: RUN, UU: RUN, DD: RUN, DU: RUN, TIMER:SLEEP},
-IDLE: {RU: RUN, LU: RUN, RD: RUN, LD: RUN, UD: RUN, UU: RUN, DD: RUN, DU: RUN, TIMER:SLEEP},
-RUN: {RU: IDLE, LU: IDLE, RD: IDLE, LD: IDLE, UD: IDLE, UU: IDLE, DD: IDLE, DU: IDLE, TIMER:RUN}
+SLEEP: {RU: RUN, LU: RUN, RD: RUN, LD: RUN, UD: RUN, UU: RUN, DD: RUN, DU: RUN, TIMER:SLEEP,SPACE:SLEEP},
+IDLE: {RU: RUN, LU: RUN, RD: RUN, LD: RUN, UD: RUN, UU: RUN, DD: RUN, DU: RUN, TIMER:SLEEP, SPACE:IDLE},
+RUN: {RU: IDLE, LU: IDLE, RD: IDLE, LD: IDLE, UD: IDLE, UU: IDLE, DD: IDLE, DU: IDLE, TIMER:RUN, SPACE:RUN}
 }
 
 PIXEL_PER_METER = (10.0 / 0.3)
@@ -126,15 +129,15 @@ class Water_Eve():
         self.dirud = 0
         self.frame = 0
         self.image = load_image('img/character_water.png')
+        self.name = 'WATER'
 
         self.q = []
-        self.cur_state = RUN
+        self.cur_state = IDLE
         self.cur_state.enter(self, None)
 
     def update(water_eve):
         water_eve.cur_state.do(water_eve)
         if water_eve.q:
-            print('water_eve.q=', water_eve.q)
 
             event = water_eve.q.pop()
             water_eve.cur_state.exit(water_eve, event)

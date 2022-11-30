@@ -14,6 +14,7 @@ key_event_table = {
 (SDL_KEYDOWN, SDLK_SPACE) : SPACE
 }
 
+# name = {'EVE','LIGHT','WATER'}
 class IDLE:
     @staticmethod
     def enter(self, event):
@@ -153,13 +154,14 @@ class Eve():
         self.image = load_image('img/character_eevee.png')
         self.right = load_image('img/character_eevee_right.png')
 
+        self.name = 'EVE'
         self.q = []
         self.cur_state = IDLE
         self.cur_state.enter(self, None)
     def update(self):
         self.cur_state.do(self)
         if self.q:
-            print('self.q=', self.q)
+            # print('self.q=', self.q)
             event = self.q.pop()
             self.cur_state.exit(self, event)
             self.cur_state = next_state[self.cur_state][event]
