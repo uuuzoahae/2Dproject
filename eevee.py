@@ -29,9 +29,6 @@ class IDLE:
         self.timer -= 1
         if self.timer == 0:
             self.add_event(TIMER)
-        if Light.count == 3:
-            game_world.clear()
-            game_framework.change_state(boss_state)
         pass
     @staticmethod
     def exit(self, event):
@@ -72,9 +69,6 @@ class RUN:
         self.y += self.dirud * RUN_SPEED_PPS * game_framework.frame_time
         self.x = clamp(0, self.x, 800)
         self.y = clamp(0, self.y, 600)
-        if Light.count == 3:
-            game_world.clear()
-            game_framework.change_state(boss_state)
 
         pass
     def exit(self, event):
@@ -115,9 +109,7 @@ class SLEEP:
     def do(self):
         # self.frame = ( 1 + self.frame) % 2
         self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 2
-        if Light.count == 3:
-            game_world.clear()
-            game_framework.change_state(boss_state)
+
 
         pass
     def exit(self, event):
@@ -167,10 +159,13 @@ class Eve():
     def update(self):
         self.cur_state.do(self)
         if self.q:
+            print('self.q=', self.q)
             event = self.q.pop()
             self.cur_state.exit(self, event)
             self.cur_state = next_state[self.cur_state][event]
             self.cur_state.enter(self, event)
+        if Light.count == 3:
+            game_framework.change_state(boss_state)
 
     def draw(self):
         self.cur_state.draw(self)

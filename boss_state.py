@@ -29,7 +29,7 @@ def enter():
     game_world.add_object(boss_map, 0)
 
     # 게임 충돌처리 추가
-    game_world.add_collision_pairs(water_eve, many_water, 'water_eve:water')
+    # game_world.add_collision_pairs(water_eve, many_water, 'water_eve:water')
 
 def exit():
     game_world.clear()

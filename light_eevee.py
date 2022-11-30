@@ -6,6 +6,7 @@ image = None
 class IDLE:
     @staticmethod
     def enter(self, event):
+        event = None
         self.dir = 0
         self.dirud = 0
         self.timer = 1000

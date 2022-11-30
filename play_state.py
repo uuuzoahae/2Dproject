@@ -9,8 +9,6 @@ from water_drop import Water_drop
 from mob import Mob
 import game_world
 import title_state
-import boss_state
-
 map = None
 eve = None
 water = None
@@ -37,7 +35,7 @@ def enter():
     water = Water_drop()
     many_water = [Water_drop() for i in range(30)]
     many_light = [Light() for i in range(10)]
-
+    Light.count = 0
     # 게임 오브젝트 추가
     game_world.add_object(eve, 1)
     game_world.add_object(map, 0)
