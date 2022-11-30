@@ -15,8 +15,8 @@ class IDLE:
     def do(self):
         self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 2
         self.timer -= 1
-        if self.timer == 0:
-            self.add_event(TIMER)
+        # if self.timer == 0:
+        #     self.add_event(TIMER)
         pass
     @staticmethod
     def exit(self, event):
@@ -24,7 +24,7 @@ class IDLE:
         pass
     @staticmethod
     def draw(self):
-        self.image.clip_draw(362+ int(self.frame) * 30, 149, 30, 34, self.x, self.y + 2)
+        self.image.clip_draw(362+ int(self.frame) * 30, 149, 30, 34, self.x, self.y + 2,30,30)
         pass
 
 
@@ -158,7 +158,7 @@ class Light_Eve():
 
     def draw(self):
         self.cur_state.draw(self)
-        # draw_rectangle(*self.get_bb())
+        draw_rectangle(*self.get_bb())
 
     def fire_ball(self):
         print('FIRE BALL')

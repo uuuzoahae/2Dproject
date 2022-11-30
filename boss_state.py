@@ -27,15 +27,17 @@ def enter():
     water_eve = Water_Eve()
     light_eve = Light_Eve()
 
+    # 캐릭터의 랜덤진화 구현
     random_eve = random.choice([water_eve, light_eve])
-
     print('random_eve =  ', type(random_eve))
 
     # 게임 오브젝트 추가
+
     if random_eve.name == 'WATER':
         game_world.add_object(water_eve,1)
     elif random_eve.name == 'LIGHT':
         game_world.add_object(light_eve,1)
+
     game_world.add_object(boss_map, 0)
 
     # 게임 충돌처리 추가
