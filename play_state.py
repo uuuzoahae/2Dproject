@@ -3,6 +3,7 @@ from pico2d import *
 import game_framework
 from eevee import Eve
 from map import Map
+from eevee_ui import UI
 from light import Light
 from fire_ball import Ball
 from water_drop import Water_drop
@@ -16,7 +17,7 @@ many_water = None
 mob = None
 many_mob = None
 Balls = None
-
+eve_ui = None
 def handle_events():
     events = get_events()
     for event in events:
@@ -28,16 +29,17 @@ def handle_events():
             eve.handle_event(event)
 
 def enter():
-    global map, eve, many_water, many_mob, water, frame_time, count, light
+    global map, eve, many_water, many_mob, water, frame_time, count, light, eve_ui
     many_mob = [Mob() for i in range(8)]
     map = Map()
     eve = Eve()
     water = Water_drop()
     many_water = [Water_drop() for i in range(30)]
     many_light = [Light() for i in range(10)]
-    Light.count = 0
+    eve_ui = UI()
     # 게임 오브젝트 추가
     game_world.add_object(eve, 1)
+    game_world.add_object(eve_ui,1)
     game_world.add_object(map, 0)
     game_world.add_objects(many_water,1)
     game_world.add_objects(many_mob, 1)

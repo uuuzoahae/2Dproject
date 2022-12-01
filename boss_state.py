@@ -5,6 +5,7 @@ import light
 from water_eevee import Water_Eve
 from boss_map import Boss_Map
 from light_eevee import Light_Eve
+from fire_eevee import Fire_Eve
 from water_drop import Water_drop
 import game_world
 import play_state
@@ -21,14 +22,16 @@ boss_map = None
 water_eve = None
 light_eve = None
 random_eve = None
+fire_eve = None
 def enter():
-    global boss_map, eve, many_water, water, frame_time, water_eve, light_eve, random_eve
+    global boss_map, eve, many_water, water, frame_time, water_eve, light_eve, fire_eve, random_eve
     boss_map = Boss_Map()
     water_eve = Water_Eve()
     light_eve = Light_Eve()
+    fire_eve = Fire_Eve()
 
     # 캐릭터의 랜덤진화 구현
-    random_eve = random.choice([water_eve, light_eve])
+    random_eve = random.choice([water_eve, light_eve, fire_eve])
     print('random_eve =  ', type(random_eve))
 
     # 게임 오브젝트 추가
@@ -36,7 +39,8 @@ def enter():
         game_world.add_object(water_eve,1)
     elif random_eve.name == 'LIGHT':
         game_world.add_object(light_eve,1)
-
+    elif random_eve.name == 'FIRE':
+        game_world.add_object(fire_eve,1)
     game_world.add_object(boss_map, 0)
 
     # 게임 충돌처리 추가

@@ -43,5 +43,6 @@ class Water_drop():
         return self.x-15, self.y-25, self.x+15, self.y+25
 
     def handle_collision(self, other, group):
-        if group == 'eve:water':
-            game_world.remove_object(self)
+        # if group == 'eve:water':
+        #     game_world.remove_object(self)
+        pass

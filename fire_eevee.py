@@ -121,16 +121,15 @@ class Fire_Eve():
             self.add_event(key_event)
 
     def __init__(self):
-        self.x, self.y = 400, 300
+        self.x, self.y = 300, 300
         self.dir = 0
         self.dirud = 0
         self.frame = 0
-        self.image = load_image('test_img/character_fire.png')
-
+        self.image = load_image('img/character_fire.png')
+        self.name = 'FIRE'
         self.q = []
         self.cur_state = IDLE
         self.cur_state.enter(self, None)
-
     def update(self):
         self.cur_state.do(self)
         if self.q:
