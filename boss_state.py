@@ -32,7 +32,6 @@ def enter():
     print('random_eve =  ', type(random_eve))
 
     # 게임 오브젝트 추가
-
     if random_eve.name == 'WATER':
         game_world.add_object(water_eve,1)
     elif random_eve.name == 'LIGHT':
