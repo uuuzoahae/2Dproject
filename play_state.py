@@ -41,7 +41,7 @@ def enter():
     game_world.add_object(eve, 1)
     game_world.add_object(eve_ui,1)
     game_world.add_object(map, 0)
-    game_world.add_objects(many_water,1)
+    game_world.add_objects(many_water,0)
     game_world.add_objects(many_mob, 1)
     game_world.add_objects(many_light,1)
     # 게임 충돌처리 추가
@@ -89,12 +89,12 @@ def collide(a, b):
 
     return True
 
-# def test_self():
-#     import play_state
-#
-#     pico2d.open_canvas()
-#     game_framework.run(play_state)
-#     pico2d.clear_canvas()
+def test_self():
+    import play_state
 
-# if __name__ == '__main__':
-#     test_self()
+    pico2d.open_canvas()
+    game_framework.run(play_state)
+    pico2d.clear_canvas()
+
+if __name__ == '__main__':
+    test_self()

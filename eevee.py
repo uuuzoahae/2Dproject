@@ -1,5 +1,4 @@
 from pico2d import *
-
 import eevee_ui
 import game_framework
 import game_world
@@ -153,14 +152,20 @@ class Eve():
 
         self.image = load_image('img/character_eevee.png')
         self.right = load_image('img/character_eevee_right.png')
+        self.light_image = load_image('img/light_piece.png')
 
         # 이브이의 타입 저장
         self.name = 'EVE'
-        
+
+
+        self.font = load_font('font/PKMN-Mystery-Dungeon.ttf',20)
+
         self.q = []
         self.cur_state = IDLE
         self.cur_state.enter(self, None)
     def update(self):
+        global eevee_ui
+
         self.cur_state.do(self)
         if self.q:
             event = self.q.pop()
@@ -170,6 +175,10 @@ class Eve():
 
         if self.light == 3:
             game_framework.change_state(boss_state)
+        if self.hp == 0:
+            game_framework.push_state(gameover_state)
+            self.hp = 500
+
 
         # eevee_ui.get_info(None, self.x, self.y, self.hp, self.light)
         # if Light.count == 3:
@@ -178,6 +187,7 @@ class Eve():
     def draw(self):
         self.cur_state.draw(self)
         draw_rectangle(*self.get_bb())
+        self.font.draw(self.x -10, self.y +20,'EVE(hp:%3d)' %self.hp, (0,0,0) )
 
     def fire_ball(self):
         print('FIRE BALL')
@@ -193,8 +203,6 @@ class Eve():
         # game_world.add_collision_pairs(mob, ball, 'mob:ball')
     def get_bb(self):
         return self.x - 10, self.y - 10, self.x + 10, self.y + 10
-    def get_info(self):
-        return self.x, self.y, self.hp, self.light
     def handle_collision(self, other, group):
         # if group == "eve:light":
         #     Light.count += 1

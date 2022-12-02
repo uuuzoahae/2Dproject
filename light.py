@@ -15,23 +15,20 @@ class Light:
 
     def update(self):
         pass
-        # if Light.num == 3:
-        #     game_framework.change_state(boss_state)
-
     def draw(self):
         self.image.clip_draw(0,0,300,300,self.x,self.y,25,25)
         draw_rectangle(*self.get_bb())
-        # if Light.count == 0:
-        #     pass
-        # elif Light.count == 1:
-        #     Light.image.clip_draw(0, 0, 300, 300, 500, 570, 40, 40)
-        # elif Light.count == 2:
-        #     Light.image.clip_draw(0, 0, 300, 300, 500, 570, 40, 40)
-        #     Light.image.clip_draw(0, 0, 300, 300, 530, 570, 40, 40)
-        # elif Light.count == 3:
-        #     Light.image.clip_draw(0, 0, 300, 300, 500, 570, 40, 40)
-        #     Light.image.clip_draw(0, 0, 300, 300, 530, 570, 40, 40)
-        #     Light.image.clip_draw(0, 0, 300, 300, 560, 570, 40, 40)
+        if Light.count == 0:
+            pass
+        elif Light.count == 1:
+            Light.image.clip_draw(0, 0, 300, 300, 500, 570, 40, 40)
+        elif Light.count == 2:
+            Light.image.clip_draw(0, 0, 300, 300, 500, 570, 40, 40)
+            Light.image.clip_draw(0, 0, 300, 300, 530, 570, 40, 40)
+        elif Light.count == 3:
+            Light.image.clip_draw(0, 0, 300, 300, 500, 570, 40, 40)
+            Light.image.clip_draw(0, 0, 300, 300, 530, 570, 40, 40)
+            Light.image.clip_draw(0, 0, 300, 300, 560, 570, 40, 40)
 
 
     def get_bb(self):
