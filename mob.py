@@ -8,9 +8,6 @@ import random
 # 공격 받을 때, 공격이 끝났을 때를 표현하기 위한 이벤트
 HIT, HIT_END = range(2)
 
-# 번개조각을 드랍할지 말지 정함
-DROP, NOT_DROP = 0, 1
-
 piece_item = None
 class IDLE:
     def enter(self,event):
@@ -102,6 +99,12 @@ class Mob():
         pass
 
     def update(self):
+
+        # 맵에 몹이 거의 남아있지 않을때, 몹을 생성함
+        if self.count_mob() == 7:
+            print(' count mob = 7')
+            # self.add_mobs(2)
+            self.add_mobs()
         self.cur_state.do(self)
         if self.event_q:
             event = self.event_q.pop()
@@ -128,3 +131,20 @@ class Mob():
         piece_item = light.Piece(self.x, self.y)
         game_world.add_object(piece_item, 1)
         game_world.add_collision_pairs(None,piece_item,'eve:piece')
+
+
+    def count_mob(self):
+        num = 0
+        for game_object in game_world.all_objects():
+            if isinstance(game_object, Mob):
+                num += 1
+        # print(num)
+        return num
+
+    # 월드에 있는 몹들이 전부 죽었을시, 재생성
+    def add_mobs(self):
+        new_mob = Mob()
+        game_world.add_object(new_mob, 1)
+        game_world.add_collision_pairs(new_mob,None,'mob:ball')
+        # new_mobs = [Mob() for i in range(num)]
+        # game_world.add_objects(new_mobs,1)
