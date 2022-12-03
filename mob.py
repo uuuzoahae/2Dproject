@@ -3,6 +3,7 @@ import random
 import game_framework
 import game_world
 import light
+import random
 
 # 공격 받을 때, 공격이 끝났을 때를 표현하기 위한 이벤트
 HIT, HIT_END = range(2)
@@ -62,7 +63,8 @@ class DIED:
             game_world.remove_object(self)
 
             # if 일정한 확률로:
-            self.drop_piece()
+            if random.randint(0,3) == 0:
+                self.drop_piece()
             # piece_item = light.Piece(self.x,self.y)
             # game_world.add_object(piece_item, 1)
 
@@ -118,13 +120,13 @@ class Mob():
         self.cur_state.draw(self)
         # draw_rectangle(*self.get_bb())
         pass
-
     def get_bb(self):
         return self.x-15, self.y-15, self.x+15, self.y+15
-
     def handle_collision(self, other, group):
         if group == 'mob:ball':
             self.event_q.insert(0, HIT)
+
+    # 아이템 (번개조각) 드랍하는 함수 생성
     def drop_piece(self):
         piece_item = light.Piece(self.x, self.y)
         game_world.add_object(piece_item, 1)

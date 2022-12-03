@@ -35,8 +35,3 @@ class Piece:
     def handle_collision(self, other, group):
         pass
 
-        # elif self.count == 2:
-        #     return 2
-        # elif self.count == 3:
-        #     return 3
-
