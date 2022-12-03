@@ -5,7 +5,7 @@ image = None
 
 class IDLE:
     def enter(self, event):
-        print("enter water IDLE")
+        # print("enter water IDLE")
         self.dir = 0
         self.dirud = 0
         self.timer = 1000

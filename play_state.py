@@ -36,10 +36,9 @@ def enter():
     water = Water_drop()
     many_water = [Water_drop() for i in range(30)]
     many_light = [Light() for i in range(10)]
-    eve_ui = UI()
+
     # 게임 오브젝트 추가
     game_world.add_object(eve, 1)
-    game_world.add_object(eve_ui,1)
     game_world.add_object(map, 0)
     game_world.add_objects(many_water,0)
     game_world.add_objects(many_mob, 1)
