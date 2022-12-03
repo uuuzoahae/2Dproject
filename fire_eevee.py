@@ -128,7 +128,7 @@ class Fire_Eve():
         self.image = load_image('img/character_fire.png')
         self.name = 'FIRE'
         self.q = []
-        self.cur_state = IDLE
+        self.cur_state = RUN
         self.cur_state.enter(self, None)
     def update(self):
         self.cur_state.do(self)

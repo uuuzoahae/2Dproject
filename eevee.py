@@ -5,7 +5,7 @@ import boss_state
 import title_state
 from fire_ball import Ball
 
-RD, LD, RU, LU, UD, UU, DD, DU, TIMER, SPACE, HD, HU= range(12)
+RD, LD, RU, LU, UD, UU, DD, DU, TIMER, SPACE= range(10)
 key_event_table = {
 (SDL_KEYDOWN, SDLK_RIGHT): RD, (SDL_KEYDOWN, SDLK_LEFT): LD,
 (SDL_KEYUP, SDLK_RIGHT): RU, (SDL_KEYUP, SDLK_LEFT): LU,
@@ -111,19 +111,17 @@ class RUN:
 class HURT:
     def enter(self, event):
         print('HURT enter')
-        # self.timer = 1000
+        self.timer = 1000
         pass
     def do(self):
         self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 2
-        # self.timer -= 5
-        # if self.timer == 0:
-        #     self.cur_state = IDLE
+        self.timer -= 5
+        if self.timer == 0:
+            self.cur_state = IDLE
         pass
     def exit(self, event):
         print('HURT exit')
-        # self.q.insert(0,HU)
-        self.add_event(HU)
-        pass
+
     def draw(self):
         self.image.clip_draw(363 + int(self.frame) , 185, 30, 30, self.x - 2, self.y, 40, 40)
         pass
@@ -137,22 +135,16 @@ class SLEEP:
         self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 2
         pass
     def exit(self, event):
-        # self.q.insert(0,HU)
-        # print("SLEEP EXIT")
         pass
     def draw(self):
         self.image.clip_draw(430 + int(self.frame) * 30, 190, 28, 28, self.x-2, self.y-2,43,43)
         pass
 
 next_state = {
-SLEEP: {RU: RUN, LU: RUN, RD: RUN, LD: RUN, UD: RUN, UU: RUN, DD: RUN, DU: RUN, TIMER:SLEEP, SPACE:SLEEP,
-        HD:HURT,HU:HURT},
-IDLE: {RU: RUN, LU: RUN, RD: RUN, LD: RUN, UD: RUN, UU: RUN, DD: RUN, DU: RUN, TIMER:SLEEP, SPACE:IDLE,
-       HD:HURT,HU:HURT},
-RUN: {RU: IDLE, LU: IDLE, RD: IDLE, LD: IDLE, UD: IDLE, UU: IDLE, DD: IDLE, DU: IDLE, TIMER:RUN, SPACE:RUN,
-      HD:HURT,HU:HURT},
-HURT: {RU: IDLE, LU: IDLE, RD: IDLE, LD: IDLE, UD: IDLE, UU: IDLE, DD: IDLE, DU: IDLE, TIMER:IDLE, SPACE:IDLE,
-       HD:HURT,HU:IDLE}
+SLEEP: {RU: RUN, LU: RUN, RD: RUN, LD: RUN, UD: RUN, UU: RUN, DD: RUN, DU: RUN, TIMER:SLEEP, SPACE:SLEEP},
+IDLE: {RU: RUN, LU: RUN, RD: RUN, LD: RUN, UD: RUN, UU: RUN, DD: RUN, DU: RUN, TIMER:SLEEP, SPACE:IDLE},
+RUN: {RU: IDLE, LU: IDLE, RD: IDLE, LD: IDLE, UD: IDLE, UU: IDLE, DD: IDLE, DU: IDLE, TIMER:RUN, SPACE:RUN},
+    HURT: {RU: HURT, LU: HURT, RD: HURT, LD: HURT, UD: HURT, UU: HURT, DD: HURT, DU: HURT, TIMER:HURT, SPACE:HURT}
 }
 
 PIXEL_PER_METER = (10.0 / 0.3)
@@ -239,8 +231,8 @@ class Eve():
             game_world.remove_object(other)
             print('piece = ', self.piece)
         elif group == "eve:water":
-            self.add_event(HD)
-            # self.q.insert(0, HD)
+            self.cur_state = HURT
+           # self.q.insert(0, HD)
             self.hp -= 50
             print('eve hp = ', self.hp)
             game_world.remove_object(other)

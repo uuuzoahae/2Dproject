@@ -145,7 +145,7 @@ class Light_Eve():
         self.image = load_image('img/character_light.png')
         self.name = 'LIGHT'
         self.q = []
-        self.cur_state = IDLE
+        self.cur_state = RUN
         self.cur_state.enter(self, None)
 
     def update(self):

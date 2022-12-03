@@ -132,7 +132,7 @@ class Water_Eve():
         self.name = 'WATER'
 
         self.q = []
-        self.cur_state = IDLE
+        self.cur_state = RUN
         self.cur_state.enter(self, None)
 
     def update(water_eve):
