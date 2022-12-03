@@ -1,6 +1,6 @@
 from pico2d import *
 import random
-import game_world
+import game_framework
 class IDLE:
     def enter(self):
         print('Mob Enter')
@@ -8,10 +8,10 @@ class IDLE:
     def exit(self):
         pass
     def do(self):
-        self.frame = (self.frame + 1) % 2
+        self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 2
         pass
     def draw(self):
-        self.image.clip_draw(self.frame*32, 25, 32, 32, self.x, self.y)
+        self.image.clip_draw(int(self.frame) * 32, 25, 32, 32, self.x, self.y)
         pass
 
 class ATTACKED:
@@ -27,12 +27,12 @@ class ATTACKED:
         pass
 
     def do(self):
-        self.frame = (self.frame + 1) % 2
+        self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 2
         self.hp -= 50
         pass
 
     def draw(self):
-        self.image.clip_draw(80 + self.frame * 46, 27, 32, 32, self.x, self.y)
+        self.image.clip_draw(80 + int(self.frame) * 46, 27, 32, 32, self.x, self.y)
         pass
 class DIED:
     def enter(self):
@@ -49,10 +49,16 @@ class DIED:
     def draw(self):
         self.image.clip_draw(80 + self.frame * 46, 27, 32, 32, self.x, self.y)
         pass
-# next_state = {
-# IDLE: {RU: RUN, LU: RUN, RD: RUN, LD: RUN, UD: RUN, UU: RUN, DD: RUN, DU: RUN},
-# RUN: {RU: IDLE, LU: IDLE, RD: IDLE, LD: IDLE, UD: IDLE, UU: IDLE, DD: IDLE, DU: IDLE}
-# }
+
+PIXEL_PER_METER = (10.0 / 0.3)
+RUN_SPEED_KMPH = 5.0
+RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
+RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
+RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
+
+TIME_PER_ACTION = 0.3
+ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
+FRAMES_PER_ACTION = 3
 class Mob():
     image = None
     def __init__(self):
@@ -88,10 +94,7 @@ class Mob():
 
     def handle_collision(self, other, group):
         if group == 'mob:ball':
-            self.cur_state.exit(self)
             self.cur_state = ATTACKED
-            self.cur_state.enter(self)
-            self.cur_state.do(self)
         # if group == 'mob:ball':
         #     game_world.remove_object(self)
         pass

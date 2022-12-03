@@ -176,7 +176,7 @@ class Eve():
         if self.light == 3:
             game_framework.change_state(boss_state)
         if self.hp == 0:
-            game_framework.push_state(gameover_state)
+            # game_framework.push_state(gameover_state)
             self.hp = 500
 
 
