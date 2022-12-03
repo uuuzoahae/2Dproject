@@ -2,9 +2,15 @@ from pico2d import *
 import random
 import game_framework
 import game_world
+
+
+HIT, HIT_END = range(2)
+
+# table = {"IDLE" : {"HIT" : "ATTACKED"},
+#          "ATTACKED" : {"HIT_END" : "IDLE"}}
+
 class IDLE:
-    def enter(self):
-        print('Mob Enter')
+    def enter(self,event):
         self.timer = 1000
         pass
     def exit(self):
@@ -13,36 +19,32 @@ class IDLE:
         self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 2
         pass
     def draw(self):
-        self.image.clip_draw(int(self.frame) * 32, 25, 32, 32, self.x, self.y) #IDLE
+        self.image.clip_draw(int(self.frame) * 32, 25, 32, 32, self.x, self.y)
         pass
 
 class ATTACKED:
-    def enter(self):
-        print("attcked enter")
+    def enter(self,event):
+        self.hp -= 5
+        pass
 
     def exit(self):
-        print("attacked exit")
-        # self.cur_state.exit(self)
-        # self.cur_state = DIED
-        # self.cur_state.enter(self)
+        self.event_q.insert(0,HIT_END)
         pass
+
 
     def do(self):
         self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 2
-        self.hp -= 5
-        if self.hp < 0:
+        if self.hp == 0:
             self.cur_state = DIED
-        pass
 
     def draw(self):
         self.image.clip_draw(80 + int(self.frame) * 46, 27, 32, 32, self.x, self.y)
         pass
 class DIED:
-    def enter(self):
-        print("DIEDDIED ENTER")
+    def enter(self,event):
+        pass
 
     def exit(self):
-        print("DIEDDIED EXIT")
         pass
 
     def do(self):
@@ -67,6 +69,12 @@ RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
 TIME_PER_ACTION = 0.3
 ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
 FRAMES_PER_ACTION = 3
+
+next_state = {
+ATTACKED: {HIT:ATTACKED, HIT_END: IDLE},
+IDLE: {HIT:ATTACKED, HIT_END:IDLE},
+DIED: {HIT:DIED, HIT_END:DIED}
+}
 class Mob():
     image = None
     def __init__(self):
@@ -77,20 +85,22 @@ class Mob():
         if Mob.image == None:
             Mob.image = load_image('img/magikarp.png')
 
-        self.q = []
+        self.event_q = []
         self.cur_state = IDLE
-        self.cur_state.enter(self)
+        self.cur_state.enter(self,None)
         pass
 
     def update(self):
         self.cur_state.do(self)
-
-        # if self.q:
-        #     event = self.q.pop()
-        #     self.cur_state.exit(self)
-        #     self.cur_state = next_state[self.cur_state][event]
-        #     self.cur_state.enter(self, event)
+        if self.event_q:
+            event = self.event_q.pop()
+            self.cur_state.exit(self)
+            self.cur_state = next_state[self.cur_state][event]
+            self.cur_state.enter(self, None)
         pass
+
+    def add_event(self, event):
+        self.event_q.insert(0, event)
 
     def draw(self):
         self.cur_state.draw(self)
@@ -102,17 +112,4 @@ class Mob():
 
     def handle_collision(self, other, group):
         if group == 'mob:ball':
-            self.cur_state = ATTACKED
-            print('mob hp = ',self.hp )
-
-        # if group == 'mob:ball':
-        #     game_world.remove_object(self)
-        pass
-
-    # def fire_ball(self):
-    #     print('FIRE BALL')
-    #
-    #     if self.dir == 1 or self.dir == -1:
-    #         ball = Ball(self.x, self.y, self.face_dir)
-    #         game_world.add_object(ball, 1)
-    #         game_world.add_collision_pairs(None, ball, 'mob:ball')
+            self.event_q.insert(0, HIT)
