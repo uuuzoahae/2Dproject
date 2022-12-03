@@ -123,8 +123,8 @@ class Mob():
         if group == 'mob:ball':
             self.event_q.insert(0, HIT)
 
-    # 아이템 (번개조각) 드랍하는 함수 생성
-    def drop_piece(self):
+
+    def drop_piece(self): # 아이템 (번개조각) 드랍하는 함수
         piece_item = light.Piece(self.x, self.y)
         game_world.add_object(piece_item, 1)
         game_world.add_collision_pairs(None,piece_item,'eve:piece')
