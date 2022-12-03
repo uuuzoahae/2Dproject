@@ -8,7 +8,7 @@ import random
 # 공격 받을 때, 공격이 끝났을 때를 표현하기 위한 이벤트
 HIT, HIT_END = range(2)
 
-piece_item = None
+# piece_item = None
 class IDLE:
     def enter(self,event):
         self.timer = 1000
@@ -58,10 +58,9 @@ class DIED:
             print('remove mob')
             game_world.remove_object(self)
 
-            # if 일정한 확률로:
+            # 랜덤한 확률로 아이템 드랍
             if random.randint(0,2) == 0:
                 self.drop_piece()
-
         pass
 
     def draw(self):
@@ -100,10 +99,8 @@ class Mob():
 
     def update(self):
 
-        # 맵에 몹이 거의 남아있지 않을때, 몹을 생성함
-        if self.count_mob() == 7:
-            print(' count mob = 7')
-            # self.add_mobs(2)
+        # 맵에 몹이 죽을때마다, 리스폰
+        if self.count_mob() <= 6:
             self.add_mobs()
         self.cur_state.do(self)
         if self.event_q:
@@ -132,19 +129,16 @@ class Mob():
         game_world.add_object(piece_item, 1)
         game_world.add_collision_pairs(None,piece_item,'eve:piece')
 
-
-    def count_mob(self):
+    def count_mob(self): # 월드에 존재하는 몹의 개체수 카운트
         num = 0
         for game_object in game_world.all_objects():
             if isinstance(game_object, Mob):
                 num += 1
-        # print(num)
         return num
 
-    # 월드에 있는 몹들이 전부 죽었을시, 재생성
-    def add_mobs(self):
-        new_mob = Mob()
-        game_world.add_object(new_mob, 1)
-        game_world.add_collision_pairs(new_mob,None,'mob:ball')
-        # new_mobs = [Mob() for i in range(num)]
-        # game_world.add_objects(new_mobs,1)
+    def add_mobs(self): # 랜덤 리스폰 함수
+        c = random.randint(0,3) # 랜덤 개체수
+        new_mobs = [Mob() for i in range(c)]
+        game_world.add_objects(new_mobs, 1)
+        game_world.add_collision_pairs(new_mobs,None,'mob:ball')
+
