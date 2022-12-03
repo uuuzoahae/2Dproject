@@ -1,10 +1,9 @@
 from pico2d import *
-import eevee_ui
 import game_framework
 import game_world
 import boss_state
 from fire_ball import Ball
-from light import Light
+# from light import Piece
 
 RD, LD, RU, LU, UD, UU, DD, DU, TIMER, SPACE = range(10)
 key_event_table = {
@@ -148,7 +147,7 @@ class Eve():
 
         # 캐릭터의 체력과 번개조각 수집개수 저장
         self.hp = 500
-        self.light = 0
+        self.piece = 0
 
         self.image = load_image('img/character_eevee.png')
         self.right = load_image('img/character_eevee_right.png')
@@ -173,7 +172,7 @@ class Eve():
             self.cur_state = next_state[self.cur_state][event]
             self.cur_state.enter(self, event)
 
-        if self.light == 3:
+        if self.piece == 3:
             game_framework.change_state(boss_state)
         if self.hp == 0:
             # game_framework.push_state(gameover_state)
@@ -204,14 +203,10 @@ class Eve():
     def get_bb(self):
         return self.x - 10, self.y - 10, self.x + 10, self.y + 10
     def handle_collision(self, other, group):
-        # if group == "eve:light":
-        #     Light.count += 1
-        #     print(" ",Light.count)
-        #     game_world.remove_object(other)
-        if group == "eve:light":
-            self.light += 1
+        if group == "eve:piece":
+            self.piece += 1
             game_world.remove_object(other)
-            print('light = ', self.light)
+            print('piece = ', self.piece)
         elif group == "eve:water":
             self.hp -= 50
             print('eve hp = ', self.hp)

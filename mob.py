@@ -2,10 +2,15 @@ from pico2d import *
 import random
 import game_framework
 import game_world
+import light
 
 # 공격 받을 때, 공격이 끝났을 때를 표현하기 위한 이벤트
 HIT, HIT_END = range(2)
 
+# 번개조각을 드랍할지 말지 정함
+DROP, NOT_DROP = 0, 1
+
+piece_item = None
 class IDLE:
     def enter(self,event):
         self.timer = 1000
@@ -45,6 +50,8 @@ class DIED:
         pass
 
     def do(self):
+        global light
+
         self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 1
         self.timer -= 5
 
@@ -53,6 +60,12 @@ class DIED:
         if self.timer < 0:
             print('remove mob')
             game_world.remove_object(self)
+
+            # if 일정한 확률로:
+            self.drop_piece()
+            # piece_item = light.Piece(self.x,self.y)
+            # game_world.add_object(piece_item, 1)
+
         pass
 
     def draw(self):
@@ -103,7 +116,7 @@ class Mob():
 
     def draw(self):
         self.cur_state.draw(self)
-        draw_rectangle(*self.get_bb())
+        # draw_rectangle(*self.get_bb())
         pass
 
     def get_bb(self):
@@ -112,3 +125,7 @@ class Mob():
     def handle_collision(self, other, group):
         if group == 'mob:ball':
             self.event_q.insert(0, HIT)
+    def drop_piece(self):
+        piece_item = light.Piece(self.x, self.y)
+        game_world.add_object(piece_item, 1)
+        game_world.add_collision_pairs(None,piece_item,'eve:piece')
