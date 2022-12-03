@@ -4,7 +4,6 @@ import game_world
 import boss_state
 import title_state
 from fire_ball import Ball
-# from light import Piece
 
 RD, LD, RU, LU, UD, UU, DD, DU, TIMER, SPACE = range(10)
 key_event_table = {
@@ -25,11 +24,11 @@ class IDLE:
         pass
     @staticmethod
     def do(self):
-        # self.frame = (self.frame + 1) % 3
         self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 3
         self.timer -= 1
         if self.timer == 0:
             self.add_event(TIMER)
+
         pass
     @staticmethod
     def exit(self, event):
@@ -38,9 +37,10 @@ class IDLE:
         pass
     @staticmethod
     def draw(self):
-        if self.dir == 0:
-            self.image.clip_draw(78 + int(self.frame) * 25, 187, 25, 25, self.x, self.y, 40, 40)
-        pass
+        self.image.clip_draw(78 + int(self.frame) * 25, 187, 25, 25, self.x, self.y, 40, 40)
+
+        # test
+        # self.image.clip_draw(363 + int(self.frame) , 185, 30, 30, self.x - 2, self.y, 40, 40)
 
 class RUN:
     def enter(self, event):
@@ -88,14 +88,18 @@ class RUN:
             self.image.clip_draw(78 + int(self.frame) * 25, 187, 25, 25, self.x, self.y, 40, 40)
         pass
 
-class ATTACK:
+class HURT:
     def enter(self):
+        print('HURT enter')
         pass
     def do(self):
+        self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 2
         pass
     def exit(self):
+        print('HURT exit')
         pass
     def draw(self):
+        self.image.clip_draw(363 + int(self.frame) , 185, 30, 30, self.x - 2, self.y, 40, 40)
         pass
 
 class SLEEP:
@@ -187,7 +191,7 @@ class Eve():
     def draw(self):
         self.cur_state.draw(self)
         # draw_rectangle(*self.get_bb())
-        self.font.draw(self.x -10, self.y +20,'eve(hp:%3d)' %self.hp, (0,0,0) )
+        # self.font.draw(self.x -10, self.y +20,'eve(hp:%3d)' %self.hp, (0,0,0) )
 
     def fire_ball(self):
         print('FIRE BALL')
