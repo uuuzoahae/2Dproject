@@ -5,7 +5,7 @@ import boss_state
 import title_state
 from fire_ball import Ball
 
-RD, LD, RU, LU, UD, UU, DD, DU, TIMER, SPACE = range(10)
+RD, LD, RU, LU, UD, UU, DD, DU, TIMER, SPACE, HD, HU= range(12)
 key_event_table = {
 (SDL_KEYDOWN, SDLK_RIGHT): RD, (SDL_KEYDOWN, SDLK_LEFT): LD,
 (SDL_KEYUP, SDLK_RIGHT): RU, (SDL_KEYUP, SDLK_LEFT): LU,
@@ -13,6 +13,12 @@ key_event_table = {
 (SDL_KEYDOWN, SDLK_DOWN) : DD, (SDL_KEYUP, SDLK_DOWN) : DU,
 (SDL_KEYDOWN, SDLK_SPACE) : SPACE
 }
+
+
+table = {"SLEEP": {"WATER": "HURT"},
+         "IDLE": {"WATER": "HURT"},
+         "RUN": {"WATER": "HURT"},
+         "HURT": {"WATER": "HURT"}}
 
 # name = {'EVE','LIGHT','WATER','FIRE'}
 class IDLE:
@@ -28,7 +34,6 @@ class IDLE:
         self.timer -= 1
         if self.timer == 0:
             self.add_event(TIMER)
-
         pass
     @staticmethod
     def exit(self, event):
@@ -47,17 +52,18 @@ class RUN:
         # print("RUN ENTER")
         if event == RD:
             self.dir += 1
-        elif event == LD:
-            self.dir -= 1
         elif event == RU:
+            self.dir -= 1
+        if event == LD:
             self.dir -= 1
         elif event == LU:
             self.dir += 1
-        elif event == UD:
+
+        if event == UD:
             self.dirud += 1
         elif event == UU:
             self.dirud -= 1
-        elif event == DD:
+        if event == DD:
             self.dirud -= 1
         elif event == DU:
             self.dirud += 1
@@ -66,6 +72,9 @@ class RUN:
         self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 3
         self.x += self.dir * RUN_SPEED_PPS * game_framework.frame_time
         self.y += self.dirud * RUN_SPEED_PPS * game_framework.frame_time
+        # self.x += self.x_v * game_framework.frame_time
+        # self.y += self.y_v * game_framework.frame_time
+
         self.x = clamp(0, self.x, 800)
         self.y = clamp(0, self.y, 600)
 
@@ -75,28 +84,45 @@ class RUN:
         self.face_dirud = self.dirud
         if event == SPACE:
             self.fire_ball()
+
         pass
     def draw(self):
+        if self.dir == 1 or self.dir == -1:
+            if self.dir == 1:
+                self.right.clip_draw(7 + int(self.frame) * 24, 0, 25, 25, self.x, self.y, 40, 40)
+            else:
+                self.image.clip_draw(77 + int(self.frame) * 25, 160, 25, 25, self.x, self.y, 40, 40)
+        elif self.dirud == 1 or self.dirud == -1:
+            if self.dirud == 1:
+                self.image.clip_draw(78 + int(self.frame) * 25, 80, 25, 25, self.x, self.y, 40, 40)
+            else:
+                self.image.clip_draw(78 + int(self.frame) * 25, 187, 25, 25, self.x, self.y, 40, 40)
 
-        if self.dir == 1:
-            self.right.clip_draw(7 + int(self.frame) * 24, 0, 25, 25, self.x, self.y, 40, 40)
-        elif self.dir == -1:
-            self.image.clip_draw(77 + int(self.frame) * 25, 160, 25, 25, self.x, self.y, 40, 40)
-        elif self.dirud == 1:
-            self.image.clip_draw(78 + int(self.frame) * 25, 80, 25, 25, self.x, self.y, 40, 40)
-        elif self.dirud == -1:
-            self.image.clip_draw(78 + int(self.frame) * 25, 187, 25, 25, self.x, self.y, 40, 40)
+        # if self.dir == 1:
+        #     self.right.clip_draw(7 + int(self.frame) * 24, 0, 25, 25, self.x, self.y, 40, 40)
+        # elif self.dir == -1:
+        #     self.image.clip_draw(77 + int(self.frame) * 25, 160, 25, 25, self.x, self.y, 40, 40)
+        # elif self.dirud == 1:
+        #     self.image.clip_draw(78 + int(self.frame) * 25, 80, 25, 25, self.x, self.y, 40, 40)
+        # elif self.dirud == -1:
+        #     self.image.clip_draw(78 + int(self.frame) * 25, 187, 25, 25, self.x, self.y, 40, 40)
         pass
 
 class HURT:
-    def enter(self):
+    def enter(self, event):
         print('HURT enter')
+        # self.timer = 1000
         pass
     def do(self):
         self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 2
+        # self.timer -= 5
+        # if self.timer == 0:
+        #     self.cur_state = IDLE
         pass
-    def exit(self):
+    def exit(self, event):
         print('HURT exit')
+        # self.q.insert(0,HU)
+        self.add_event(HU)
         pass
     def draw(self):
         self.image.clip_draw(363 + int(self.frame) , 185, 30, 30, self.x - 2, self.y, 40, 40)
@@ -108,23 +134,25 @@ class SLEEP:
         self.dirud = 0
         pass
     def do(self):
-        # self.frame = ( 1 + self.frame) % 2
         self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 2
-
-
         pass
     def exit(self, event):
+        # self.q.insert(0,HU)
         # print("SLEEP EXIT")
         pass
     def draw(self):
         self.image.clip_draw(430 + int(self.frame) * 30, 190, 28, 28, self.x-2, self.y-2,43,43)
-        #43, 43)
         pass
 
 next_state = {
-SLEEP: {RU: RUN, LU: RUN, RD: RUN, LD: RUN, UD: RUN, UU: RUN, DD: RUN, DU: RUN, TIMER:SLEEP, SPACE:SLEEP},
-IDLE: {RU: RUN, LU: RUN, RD: RUN, LD: RUN, UD: RUN, UU: RUN, DD: RUN, DU: RUN, TIMER:SLEEP, SPACE:IDLE},
-RUN: {RU: IDLE, LU: IDLE, RD: IDLE, LD: IDLE, UD: IDLE, UU: IDLE, DD: IDLE, DU: IDLE, TIMER:RUN, SPACE:RUN}
+SLEEP: {RU: RUN, LU: RUN, RD: RUN, LD: RUN, UD: RUN, UU: RUN, DD: RUN, DU: RUN, TIMER:SLEEP, SPACE:SLEEP,
+        HD:HURT,HU:HURT},
+IDLE: {RU: RUN, LU: RUN, RD: RUN, LD: RUN, UD: RUN, UU: RUN, DD: RUN, DU: RUN, TIMER:SLEEP, SPACE:IDLE,
+       HD:HURT,HU:HURT},
+RUN: {RU: IDLE, LU: IDLE, RD: IDLE, LD: IDLE, UD: IDLE, UU: IDLE, DD: IDLE, DU: IDLE, TIMER:RUN, SPACE:RUN,
+      HD:HURT,HU:HURT},
+HURT: {RU: IDLE, LU: IDLE, RD: IDLE, LD: IDLE, UD: IDLE, UU: IDLE, DD: IDLE, DU: IDLE, TIMER:IDLE, SPACE:IDLE,
+       HD:HURT,HU:IDLE}
 }
 
 PIXEL_PER_METER = (10.0 / 0.3)
@@ -169,7 +197,6 @@ class Eve():
         self.cur_state.enter(self, None)
     def update(self):
         global eevee_ui
-
         self.cur_state.do(self)
         if self.q:
             event = self.q.pop()
@@ -212,6 +239,8 @@ class Eve():
             game_world.remove_object(other)
             print('piece = ', self.piece)
         elif group == "eve:water":
+            self.add_event(HD)
+            # self.q.insert(0, HD)
             self.hp -= 50
             print('eve hp = ', self.hp)
             game_world.remove_object(other)

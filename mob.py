@@ -62,7 +62,7 @@ class DIED:
             game_world.remove_object(self)
 
             # if 일정한 확률로:
-            if random.randint(0,3) == 0:
+            if random.randint(0,2) == 0:
                 self.drop_piece()
 
         pass
