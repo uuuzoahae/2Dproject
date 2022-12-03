@@ -21,15 +21,14 @@ class ATTACKED:
 
     def exit(self):
         print("attacked exit")
+        self.cur_state.exit(self)
+        self.cur_state = DIED
+        self.cur_state.enter(self)
         pass
 
     def do(self):
         self.frame = (self.frame + 1) % 2
         self.hp -= 50
-        if self.hp == 0:
-            self.cur_state.exit(self)
-            self.cur_state = DIED
-            self.cur_state.enter(self)
         pass
 
     def draw(self):
@@ -48,6 +47,7 @@ class DIED:
         pass
 
     def draw(self):
+        self.image.clip_draw(80 + self.frame * 46, 27, 32, 32, self.x, self.y)
         pass
 # next_state = {
 # IDLE: {RU: RUN, LU: RUN, RD: RUN, LD: RUN, UD: RUN, UU: RUN, DD: RUN, DU: RUN},
