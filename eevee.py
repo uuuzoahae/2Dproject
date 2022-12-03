@@ -2,6 +2,7 @@ from pico2d import *
 import game_framework
 import game_world
 import boss_state
+import title_state
 from fire_ball import Ball
 # from light import Piece
 
@@ -175,7 +176,7 @@ class Eve():
         if self.piece == 3:
             game_framework.change_state(boss_state)
         if self.hp == 0:
-            # game_framework.push_state(gameover_state)
+            game_framework.change_state(title_state)
             self.hp = 500
 
 
@@ -185,21 +186,20 @@ class Eve():
 
     def draw(self):
         self.cur_state.draw(self)
-        draw_rectangle(*self.get_bb())
-        self.font.draw(self.x -10, self.y +20,'EVE(hp:%3d)' %self.hp, (0,0,0) )
+        # draw_rectangle(*self.get_bb())
+        self.font.draw(self.x -10, self.y +20,'eve(hp:%3d)' %self.hp, (0,0,0) )
 
     def fire_ball(self):
         print('FIRE BALL')
-
         if self.dir == 1 or self.dir == -1:
-            ball = Ball(self.x, self.y, self.face_dir)
+            ball = Ball(self.x, self.y, self.face_dir,'dir')
             game_world.add_object(ball, 1)
             game_world.add_collision_pairs(None, ball, 'mob:ball')
-        # elif self.dirud == 1 or self.dirud == -1:
-        #     ball = Ball(self.x, self.y , self.face_dirud)
-        #     game_world.add_object(ball, 1)
+        elif self.dirud == 1 or self.dirud == -1:
+            ball = Ball(self.x, self.y, self.face_dirud,'dirud')
+            game_world.add_object(ball, 1)
+            game_world.add_collision_pairs(None, ball, 'mob:ball')
 
-        # game_world.add_collision_pairs(mob, ball, 'mob:ball')
     def get_bb(self):
         return self.x - 10, self.y - 10, self.x + 10, self.y + 10
     def handle_collision(self, other, group):

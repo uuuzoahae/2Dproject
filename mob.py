@@ -57,7 +57,6 @@ class DIED:
         self.timer -= 5
 
         # DIED 상태에서 일정시간이 흐르면 몹 삭제
-
         if self.timer < 0:
             print('remove mob')
             game_world.remove_object(self)
@@ -65,8 +64,6 @@ class DIED:
             # if 일정한 확률로:
             if random.randint(0,3) == 0:
                 self.drop_piece()
-            # piece_item = light.Piece(self.x,self.y)
-            # game_world.add_object(piece_item, 1)
 
         pass
 
@@ -92,7 +89,7 @@ DIED: {HIT:DIED, HIT_END:DIED}
 class Mob():
     image = None
     def __init__(self):
-        self.x, self.y = random.randint(20,580), random.randint(20,600)
+        self.x, self.y = random.randint(50,550), random.randint(50,550)
         self.dir = 0
         self.frame = 0
         self.hp = 500

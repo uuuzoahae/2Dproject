@@ -4,19 +4,22 @@ import game_world
 class Ball:
     image = None
 
-    def __init__(self, x , y , velocity):
+    def __init__(self, x , y , velocity, direction):
         if Ball.image == None:
             Ball.image = load_image('img/fire_attack.png')
-        self.x, self.y, self.velocity = x, y, velocity
+        self.x, self.y, self.velocity, self.face_dir= x, y, velocity, direction
 
     def draw(self):
         self.image.draw(self.x, self.y)
-        draw_rectangle(*self.get_bb())
+        # draw_rectangle(*self.get_bb())
 
     def update(self):
-        self.x += self.velocity * 3
-        if self.x < 25 or self.x > 600 - 25 or self.y < 25 or self.y > 600 - 25:
-            game_world.remove_object(self)
+        if self.face_dir == 'dir':
+            self.x += self.velocity * 1
+            # if self.x < 25 or self.x > 600 - 25 or self.y < 25 or self.y > 600 - 25:
+            #     game_world.remove_object(self)
+        elif self.face_dir == 'dirud':
+            self.y += self.velocity * 1
 
     def get_bb(self):
         return self.x - 10, self.y - 10, self.x + 10, self.y + 10

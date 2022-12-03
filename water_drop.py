@@ -36,13 +36,11 @@ class Water_drop():
     #     self.y = clamp(0, self.y, 600)
     #     pass
     def draw(self):
-        self.image.clip_draw(0, 0, 1000, 1000, self.x, self.y, 50, 50)
-        draw_rectangle(*self.get_bb())
+        self.image.clip_draw(0, 0, 1000, 1000, self.x, self.y, 30, 30)
+        # draw_rectangle(*self.get_bb())
 
     def get_bb(self):
-        return self.x-15, self.y-25, self.x+15, self.y+25
+        return self.x-9, self.y-15, self.x+9, self.y+15
 
     def handle_collision(self, other, group):
-        # if group == 'eve:water':
-        #     game_world.remove_object(self)
         pass
