@@ -1,5 +1,7 @@
 from pico2d import *
 import game_framework
+import game_world
+import random_eve_ui
 
 image = None
 
@@ -125,7 +127,7 @@ class Water_Eve():
 
     def __init__(self):
         self.x, self.y = 300, 300
-        self.hp = 500
+        self.hp = 300
 
         self.dir = 0
         self.dirud = 0
@@ -138,6 +140,8 @@ class Water_Eve():
         self.cur_state.enter(self, None)
 
     def update(water_eve):
+        global ui
+        ui = random_eve_ui.UI(water_eve.x, water_eve.y, water_eve.hp)
         water_eve.cur_state.do(water_eve)
         if water_eve.q:
 
@@ -147,8 +151,10 @@ class Water_Eve():
             water_eve.cur_state.enter(water_eve, event)
 
     def draw(self):
+        global ui
+        ui.draw()
         self.cur_state.draw(self)
-        draw_rectangle(*self.get_bb())
+        # draw_rectangle(*self.get_bb())
 
     def fire_ball(self):
         print('FIRE BALL')
@@ -157,4 +163,8 @@ class Water_Eve():
         return self.x - 15, self.y - 15, self.x + 15, self.y + 20
 
     def handle_collision(self, other, group):
+        if group == "eve:water":
+            self.hp -= 50
+            print('eve hp = ', self.hp)
+            game_world.remove_object(other)
         pass
