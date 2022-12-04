@@ -64,8 +64,6 @@ class Gyarados:
             Gyarados.images['Idle'] = [load_image("boss/gayarados/" + 'Idle' + " (%d)" % i + ".png") for i in range(1,3)]
             Gyarados.images['Walk'] = [load_image("boss/gayarados/" + 'Walk' + " (%d)" % i + ".png") for i in range(1,5)]
 
-
-
     def __init__(self):
         #self.x, self.y = 1280 / 4 * 3, 1024 / 4 * 3
         self.x, self.y = random.randint(200, 600), random.randint(200, 600)
@@ -86,9 +84,6 @@ class Gyarados:
 
 
     def calculate_current_position(self):
-
-        self.draw_update()
-
 
         self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % FRAMES_PER_ACTION
         self.x += self.speed * math.cos(self.dir) * game_framework.frame_time
@@ -112,7 +107,7 @@ class Gyarados:
             print('move_to success')
         else:
             self.speed = RUN_SPEED_PPS
-            print('move_to running')
+            # print('move_to running')
             return BehaviorTree.RUNNING
 
         pass
@@ -194,7 +189,7 @@ class Gyarados:
         # find_random_location_node = Leaf('Find Random Location', self.find_random_location)
         move_to_node = Leaf('Move To', self.move_to)
         # play_beep_node = Leaf('Play Beep', self.play_beep)
-        # wander_sequence = Sequence('Wander', find_random_location_node,move_to_node, play_beep_node)
+        # wander_sequence = Sequence('Wander', find_random_location_node,move_to_node)
 
         # find_ball_location_node = Leaf('Find Ball Location', self.find_ball_location)
         # eat_ball_sequence = Sequence('Eat Ball', find_ball_location_node, move_to_node, play_beep_node)
@@ -221,18 +216,21 @@ class Gyarados:
         self.calculate_current_position()
 
     def draw(self):
+        global FRAMES_PER_ACTION
         # self.font.draw(self.x - 60, self.y + 50, '%7d' % self.hp, (0, 0, 255))
-        #fill here
         if math.cos(self.dir) < 0:
             if self.speed == 0:
+                FRAMES_PER_ACTION = 2
                 Gyarados.images['Idle'][int(self.frame)].composite_draw(0, 'h', self.x, self.y, 100, 100)
             else:
+                FRAMES_PER_ACTION = 4
                 Gyarados.images['Walk'][int(self.frame)].composite_draw(0, 'h', self.x, self.y, 100, 100)
         else:
             if self.speed == 0:
+                FRAMES_PER_ACTION = 2
                 Gyarados.images['Idle'][int(self.frame)].draw(self.x, self.y, 100, 100)
             else:
-                pass
+                FRAMES_PER_ACTION = 4
                 Gyarados.images['Walk'][int(self.frame)].draw(self.x, self.y, 100, 100)
     def handle_event(self, event):
         pass
