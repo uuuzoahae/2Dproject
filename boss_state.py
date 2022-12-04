@@ -31,7 +31,7 @@ def enter():
     water_eve = Water_Eve()
     light_eve = Light_Eve()
     fire_eve = Fire_Eve()
-    many_water = [Random_drop() for i in range(30)]
+    # many_water = [Random_drop() for i in range(30)]
     boss = Gyarados()
 
     # 캐릭터의 랜덤진화 구현
@@ -48,7 +48,7 @@ def enter():
     elif random_eve.name == 'FIRE':
         game_world.add_object(fire_eve,1)
     game_world.add_object(boss_map, 0)
-    game_world.add_objects(many_water, 1)
+    # game_world.add_objects(many_water, 1)
 
     # 보스 몹 추가
     game_world.add_object(boss, 1)

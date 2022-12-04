@@ -19,7 +19,7 @@ class Random_drop():
     def __init__(self):
         # 물방울 랜덤 선택
         self.frame = random.choice([0, 17, 34, 50])
-        print('ran frame = ', self.frame)
+        # print('ran frame = ', self.frame)
         
         self.x, self.y = random.randint(0 ,700) , random.randint(300 ,600)
         if Random_drop.image == None:

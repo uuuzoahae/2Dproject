@@ -13,14 +13,15 @@ import game_world
 import boss_state
 
 #
-# class TargetMarker:
-#     def __init__(self, x=0, y=0):
-#         self.x, self.y = x, y
-#         self.image = load_image('hand_arrow.png')
-#     def update(self):
-#         pass
-#     def draw(self):
-#         self.image.draw(self.x, self.y, 50, 50)
+class TargetMarker:
+    def __init__(self, x=0, y=0):
+        self.x, self.y = x, y
+        # self.image = load_image('hand_arrow.png')
+    def update(self):
+        pass
+    def draw(self):
+        pass
+        # self.image.draw(self.x, self.y, 50, 50)
 
 
 
@@ -51,8 +52,8 @@ FRAMES_PER_ACTION = 10
 
 
 
-animation_names = ['Attack', 'Died', 'Hurt', 'Idle','Special Attack','Walk' ]
-
+# animation_names = ['Attack', 'Died', 'Hurt', 'Idle','Special Attack','Walk' ]
+animation_names = ['Idle', 'Walk']
 
 class Gyarados:
     images = None
@@ -60,8 +61,8 @@ class Gyarados:
     def load_images(self):
         if Gyarados.images == None:
             Gyarados.images = {}
-            for name in animation_names:
-                Gyarados.images[name] = [load_image("boss/gyarados"+ name + " (%d)" % i + ".png") for i in range(1, 7)]
+            Gyarados.images['Idle'] = [load_image("boss/gayarados/" + 'Idle' + " (%d)" % i + ".png") for i in range(1,3)]
+            Gyarados.images['Walk'] = [load_image("boss/gayarados/" + 'Walk' + " (%d)" % i + ".png") for i in range(1,5)]
 
 
 
@@ -80,11 +81,15 @@ class Gyarados:
         # self.font = load_font('ENCR10B.TTF', 16)
         self.hp = 1000
 
-        # self.target_marker = TargetMarker(self.tx, self.ty)
+        self.target_marker = TargetMarker(self.tx, self.ty)
         # game_world.add_object(self.target_marker, 1)
 
 
     def calculate_current_position(self):
+
+        self.draw_update()
+
+
         self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % FRAMES_PER_ACTION
         self.x += self.speed * math.cos(self.dir) * game_framework.frame_time
         self.y += self.speed * math.sin(self.dir) * game_framework.frame_time
@@ -92,11 +97,11 @@ class Gyarados:
         self.y = clamp(50, self.y, 550)
 
 
-    # def find_random_location(self):
-    #     self.tx, self.ty = random.randint(50, 1230), random.randint(50, 974)
-    #     self.target_marker.x, self.target_marker.y = self.tx, self.ty
-    #     return BehaviorTree.SUCCESS
-    #     pass
+    def find_random_location(self):
+        self.tx, self.ty = random.randint(50, 550), random.randint(50, 550)
+        self.target_marker.x, self.target_marker.y = self.tx, self.ty
+        return BehaviorTree.SUCCESS
+        pass
 
     def move_to(self, radius = 0.5):
         distance = (self.tx - self.x) ** 2 + (self.ty - self.y) **2
@@ -104,9 +109,12 @@ class Gyarados:
         if distance < (PIXEL_PER_METER * radius) ** 2:
             self.speed = 0
             return BehaviorTree.SUCCESS
+            print('move_to success')
         else:
             self.speed = RUN_SPEED_PPS
+            print('move_to running')
             return BehaviorTree.RUNNING
+
         pass
 
     # def play_beep(self):
@@ -134,19 +142,19 @@ class Gyarados:
     def calculate_squared_distance(self, a, b):
         return (a.x-b.x)**2 + (a.y-b.y)**2
 
-    def move_to_boy(self):
-        distance = self.calculate_squared_distance(self, boss_state.random_eve)
-
-        if distance > (PIXEL_PER_METER * 10) ** 2:
-            self.speed = 0
-            return BehaviorTree.FAIL
-
-        if distance < (PIXEL_PER_METER * 0.5) ** 2:
-            self.speed = 0
-            return BehaviorTree.SUCCESS
-        else:
-            self.speed = RUN_SPEED_PPS
-            return BehaviorTree.RUNNING
+    # def move_to_boy(self):
+    #     distance = self.calculate_squared_distance(self, boss_state.random_eve)
+    #
+    #     if distance > (PIXEL_PER_METER * 10) ** 2:
+    #         self.speed = 0
+    #         return BehaviorTree.FAIL
+    #
+    #     if distance < (PIXEL_PER_METER * 0.5) ** 2:
+    #         self.speed = 0
+    #         return BehaviorTree.SUCCESS
+    #     else:
+    #         self.speed = RUN_SPEED_PPS
+    #         return BehaviorTree.RUNNING
 
         #
         # else:
@@ -183,22 +191,26 @@ class Gyarados:
     #         return BehaviorTree.FAIL
 
     def build_behavior_tree(self):
-        find_random_location_node = Leaf('Find Random Location', self.find_random_location)
+        # find_random_location_node = Leaf('Find Random Location', self.find_random_location)
         move_to_node = Leaf('Move To', self.move_to)
-        play_beep_node = Leaf('Play Beep', self.play_beep)
-        wander_sequence = Sequence('Wander', find_random_location_node,move_to_node, play_beep_node)
+        # play_beep_node = Leaf('Play Beep', self.play_beep)
+        # wander_sequence = Sequence('Wander', find_random_location_node,move_to_node, play_beep_node)
 
-        find_ball_location_node = Leaf('Find Ball Location', self.find_ball_location)
-        eat_ball_sequence = Sequence('Eat Ball', find_ball_location_node, move_to_node, play_beep_node)
+        # find_ball_location_node = Leaf('Find Ball Location', self.find_ball_location)
+        # eat_ball_sequence = Sequence('Eat Ball', find_ball_location_node, move_to_node, play_beep_node)
+        #
+        # wander_or_eat_ball_selector = Selector('Wander or Eat Ball', eat_ball_sequence, wander_sequence)
+        #
+        # move_to_boy_node = Leaf('Move to Boy', self.move_to_boy)
+        # flee_from_boy_node = Leaf('Flee from Boy', self.flee_from_boy)
+        # chase_or_flee_selector = Selector('Chase or Flee Boy', move_to_boy_node, flee_from_boy_node)
 
-        wander_or_eat_ball_selector = Selector('Wander or Eat Ball', eat_ball_sequence, wander_sequence)
+        # final_selector = Selector('Final', chase_or_flee_selector, wander_or_eat_ball_selector)
+        # self.bt = BehaviorTree(final_selector)
 
-        move_to_boy_node = Leaf('Move to Boy', self.move_to_boy)
-        flee_from_boy_node = Leaf('Flee from Boy', self.flee_from_boy)
-        chase_or_flee_selector = Selector('Chase or Flee Boy', move_to_boy_node, flee_from_boy_node)
 
-        final_selector = Selector('Final', chase_or_flee_selector, wander_or_eat_ball_selector)
-        self.bt = BehaviorTree(final_selector)
+
+        self.bt = BehaviorTree(move_to_node)
         pass
 
     def get_bb(self):
@@ -220,8 +232,8 @@ class Gyarados:
             if self.speed == 0:
                 Gyarados.images['Idle'][int(self.frame)].draw(self.x, self.y, 100, 100)
             else:
+                pass
                 Gyarados.images['Walk'][int(self.frame)].draw(self.x, self.y, 100, 100)
-
     def handle_event(self, event):
         pass
 
