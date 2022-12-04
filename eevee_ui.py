@@ -21,7 +21,6 @@ class UI:
     #     self.hp = hp, self.light = light
 
     def draw(self):
-
         # hp ui
         if self.hp <= 300 and self.hp > 200:
             self.image.clip_draw(int(self.frame),0,100,100,self.x - 18, self.y+25,22,22)
@@ -43,10 +42,6 @@ class UI:
             self.light_image.clip_draw(int(self.frame), 0, 100, 100, self.x - 18, self.y - 25, 22, 22)
             self.light_image.clip_draw(int(self.frame), 0, 100, 100, self.x , self.y - 25, 22, 22)
             self.light_image.clip_draw(int(self.frame), 0, 100, 100, self.x + 18, self.y - 25, 22, 22)
-
-
-
-        # self.hp_image.draw(300,300,300,300)
         pass
 
     def update(self):
@@ -58,9 +53,3 @@ class UI:
 
     def play_sound(self):
         pass
-
-    def get_info(self, x, y, hp, light):
-        self.x = x
-        self.y = y
-        self.hp = hp
-        self.light = light

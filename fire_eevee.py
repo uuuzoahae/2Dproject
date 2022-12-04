@@ -122,13 +122,15 @@ class Fire_Eve():
 
     def __init__(self):
         self.x, self.y = 300, 300
+        self.hp = 500
+
         self.dir = 0
         self.dirud = 0
         self.frame = 0
         self.image = load_image('img/character_fire.png')
         self.name = 'FIRE'
         self.q = []
-        self.cur_state = RUN
+        self.cur_state = IDLE
         self.cur_state.enter(self, None)
     def update(self):
         self.cur_state.do(self)

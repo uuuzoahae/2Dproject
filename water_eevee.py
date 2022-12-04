@@ -125,6 +125,8 @@ class Water_Eve():
 
     def __init__(self):
         self.x, self.y = 300, 300
+        self.hp = 500
+
         self.dir = 0
         self.dirud = 0
         self.frame = 0
@@ -132,7 +134,7 @@ class Water_Eve():
         self.name = 'WATER'
 
         self.q = []
-        self.cur_state = RUN
+        self.cur_state = IDLE
         self.cur_state.enter(self, None)
 
     def update(water_eve):

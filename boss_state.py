@@ -6,7 +6,7 @@ from water_eevee import Water_Eve
 from boss_map import Boss_Map
 from light_eevee import Light_Eve
 from fire_eevee import Fire_Eve
-from water_drop import Water_drop
+from random_drop import Random_drop
 import game_world
 import play_state
 import time
@@ -29,10 +29,13 @@ def enter():
     water_eve = Water_Eve()
     light_eve = Light_Eve()
     fire_eve = Fire_Eve()
+    many_water = [Random_drop() for i in range(30)]
 
     # 캐릭터의 랜덤진화 구현
     random_eve = random.choice([water_eve, light_eve, fire_eve])
     print('random_eve =  ', type(random_eve))
+
+    # 물방울의 랜덤선택
 
     # 게임 오브젝트 추가
     if random_eve.name == 'WATER':
@@ -42,8 +45,10 @@ def enter():
     elif random_eve.name == 'FIRE':
         game_world.add_object(fire_eve,1)
     game_world.add_object(boss_map, 0)
+    game_world.add_objects(many_water, 1)
 
     # 게임 충돌처리 추가
+    game_world.add_collision_pairs(random_eve, many_water,'eve:water')
     # game_world.add_collision_pairs(water_eve, many_water, 'water_eve:water')
 
 def exit():
