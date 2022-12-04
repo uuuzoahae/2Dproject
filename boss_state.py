@@ -9,6 +9,7 @@ from fire_eevee import Fire_Eve
 from random_drop import Random_drop
 import game_world
 import play_state
+from gyarados import Gyarados
 import time
 
 frame_time = 0.0
@@ -23,13 +24,15 @@ water_eve = None
 light_eve = None
 random_eve = None
 fire_eve = None
+boss = None
 def enter():
-    global boss_map, eve, many_water, water, frame_time, water_eve, light_eve, fire_eve, random_eve
+    global boss_map, eve, many_water, water, frame_time, water_eve, light_eve, fire_eve, random_eve, boss
     boss_map = Boss_Map()
     water_eve = Water_Eve()
     light_eve = Light_Eve()
     fire_eve = Fire_Eve()
     many_water = [Random_drop() for i in range(30)]
+    boss = Gyarados()
 
     # 캐릭터의 랜덤진화 구현
     random_eve = random.choice([water_eve, light_eve, fire_eve])
@@ -46,6 +49,9 @@ def enter():
         game_world.add_object(fire_eve,1)
     game_world.add_object(boss_map, 0)
     game_world.add_objects(many_water, 1)
+
+    # 보스 몹 추가
+    game_world.add_object(boss, 1)
 
     # 게임 충돌처리 추가
     game_world.add_collision_pairs(random_eve, many_water,'eve:water')
