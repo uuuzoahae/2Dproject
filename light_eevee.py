@@ -3,7 +3,7 @@ import game_framework
 import random_eve_ui
 import game_world
 image = None
-
+from random_eve_attack import Ev_Ball
 class IDLE:
     @staticmethod
     def enter(self, event):
@@ -21,7 +21,8 @@ class IDLE:
         pass
     @staticmethod
     def exit(self, event):
-        print('exit light IDLE')
+        if event == SPACE:
+            self.fire_ball()
         pass
     @staticmethod
     def draw(self):
@@ -57,11 +58,11 @@ class RUN:
         self.y = clamp(0, self.y, 600)
         pass
     def exit(self, event):
-        # self.face_dir = self.dir
-        # self.face_dirud = self.dirud
-        # if event == SPACE:
-        #     self.fire_ball()
-        print('exit light RUN')
+        self.face_dir = self.dir
+        self.face_dirud = self.dirud
+        if event == SPACE:
+            self.fire_ball()
+
         pass
     def draw(self):
 
@@ -148,7 +149,7 @@ class Light_Eve():
         self.image = load_image('img/character_light.png')
         self.name = 'LIGHT'
         self.q = []
-        self.cur_state = IDLE
+        self.cur_state = RUN
         self.cur_state.enter(self, None)
 
     def update(self):
@@ -170,12 +171,20 @@ class Light_Eve():
 
     def fire_ball(self):
         print('FIRE BALL')
+        if self.dir == 1 or self.dir == -1:
+            ball = Ev_Ball(self.x, self.y, self.face_dir,'dir')
+            game_world.add_object(ball, 1)
+            game_world.add_collision_pairs(None, ball, 'boss:ball')
+        elif self.dirud == 1 or self.dirud == -1:
+            ball = Ev_Ball(self.x, self.y, self.face_dirud,'dirud')
+            game_world.add_object(ball, 1)
+            game_world.add_collision_pairs(None, ball, 'boss:ball')
 
     def get_bb(self):
         return self.x - 15, self.y - 15, self.x + 15, self.y + 20
 
     def handle_collision(self, other, group):
-        if group == "eve:water":
+        if group == "rand_eve:water":
             self.hp -= 50
             print('eve hp = ', self.hp)
             game_world.remove_object(other)

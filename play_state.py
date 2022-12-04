@@ -17,7 +17,6 @@ many_water = None
 mob = None
 many_mob = None
 Balls = None
-eve_ui = None
 def handle_events():
     events = get_events()
     for event in events:
@@ -38,7 +37,7 @@ def enter():
 
     # 게임 오브젝트 추가
     game_world.add_object(eve, 1)
-    game_world.add_object(map, 0)
+    game_world.add_object(map, 0 )
     game_world.add_objects(many_water,0)
     game_world.add_objects(many_mob, 1)
 

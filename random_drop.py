@@ -38,8 +38,5 @@ class Random_drop():
         return self.x-9, self.y-15, self.x+9, self.y+15
 
     def handle_collision(self, other, group):
-        if group == 'eve:water':
-            other.hp -= 50
-            game_world.remove_object(self)
 
         pass

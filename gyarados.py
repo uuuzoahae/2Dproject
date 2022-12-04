@@ -2,6 +2,7 @@ import random
 import math
 import game_framework
 import winsound
+import ending_state
 
 from BehaviorTree import BehaviorTree, Selector, Sequence, Leaf
 from pico2d import *
@@ -77,14 +78,14 @@ class Gyarados:
 
         # self.target_ball = None
         # self.font = load_font('ENCR10B.TTF', 16)
-        self.hp = 1000
+        self.hp = 2000
 
         self.target_marker = TargetMarker(self.tx, self.ty)
         # game_world.add_object(self.target_marker, 1)
 
 
     def calculate_current_position(self):
-        self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % FRAMES_PER_ACTION
+        self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 2
         self.x += self.speed * math.cos(self.dir) * game_framework.frame_time
         self.y += self.speed * math.sin(self.dir) * game_framework.frame_time
         self.x = clamp(50, self.x, 500)
@@ -142,7 +143,7 @@ class Gyarados:
 
         if distance > (PIXEL_PER_METER * 5) ** 2:
             self.speed = 0
-            print('behavior fail')
+            # print('behavior fail')
             return BehaviorTree.FAIL
 
         if distance < (PIXEL_PER_METER * 0.1) ** 2:
@@ -216,27 +217,26 @@ class Gyarados:
     def update(self):
         self.bt.run()
         self.calculate_current_position()
+        if self.hp < 0:
+            game_world.remove_object(self)
+            game_framework.change_state(ending_state)
+
 
     def draw(self):
-        global FRAMES_PER_ACTION
-        # self.font.draw(self.x - 60, self.y + 50, '%7d' % self.hp, (0, 0, 255))
         if math.cos(self.dir) < 0:
             if self.speed == 0:
-                FRAMES_PER_ACTION = 2
                 Gyarados.images['Idle'][int(self.frame)].composite_draw(0, 'h', self.x, self.y, 100, 100)
             else:
-                FRAMES_PER_ACTION = 4
                 Gyarados.images['Walk'][int(self.frame)].composite_draw(0, 'h', self.x, self.y, 100, 100)
         else:
             if self.speed == 0:
-                FRAMES_PER_ACTION = 2
                 Gyarados.images['Idle'][int(self.frame)].draw(self.x, self.y, 100, 100)
             else:
-                FRAMES_PER_ACTION = 4
                 Gyarados.images['Walk'][int(self.frame)].draw(self.x, self.y, 100, 100)
     def handle_event(self, event):
         pass
 
-    # def handle_collision(self, other, group):
-    #     if 'zombie:ball' == group:
-    #         self.hp += 100
+    def handle_collision(self, other, group):
+        if 'boss:ball' == group:
+            self.hp -= 1
+            print(' boss hp = ', self.hp)

@@ -1,6 +1,7 @@
 from pico2d import *
 import game_framework
 import game_world
+from random_eve_attack import Ev_Ball
 import random_eve_ui
 image = None
 
@@ -20,6 +21,8 @@ class IDLE:
         pass
     @staticmethod
     def exit(self, event):
+        if event == SPACE:
+            self.fire_ball()
         pass
     @staticmethod
     def draw(self):
@@ -55,10 +58,10 @@ class RUN:
         self.y = clamp(0, self.y, 600)
         pass
     def exit(self, event):
-        # self.face_dir = self.dir
-        # self.face_dirud = self.dirud
-        # if event == SPACE:
-        #     self.fire_ball()
+        self.face_dir = self.dir
+        self.face_dirud = self.dirud
+        if event == SPACE:
+            self.fire_ball()
         pass
     def draw(self):
 
@@ -131,7 +134,7 @@ class Fire_Eve():
         self.image = load_image('img/character_fire.png')
         self.name = 'FIRE'
         self.q = []
-        self.cur_state = IDLE
+        self.cur_state = RUN
         self.cur_state.enter(self, None)
     def update(self):
         global ui
@@ -151,13 +154,20 @@ class Fire_Eve():
 
     def fire_ball(self):
         print('FIRE BALL')
-
+        if self.dir == 1 or self.dir == -1:
+            ball = Ev_Ball(self.x, self.y, self.face_dir, 'dir')
+            game_world.add_object(ball, 1)
+            game_world.add_collision_pairs(None, ball, 'boss:ball')
+        elif self.dirud == 1 or self.dirud == -1:
+            ball = Ev_Ball(self.x, self.y, self.face_dirud, 'dirud')
+            game_world.add_object(ball, 1)
+            game_world.add_collision_pairs(None, ball, 'boss:ball')
     def get_bb(self):
         # return self.x - 20, self.y - 15, self.x + 20, self.y + 15
         return self.x - 20, self.y - 15, self.x + 20, self.y + 20
 
     def handle_collision(self, other, group):
-        if group == "eve:water":
+        if group == "rand_eve:water":
             self.hp -= 50
             print('eve hp = ', self.hp)
             game_world.remove_object(other)
