@@ -6,7 +6,7 @@ import game_framework
 
 
 PIXEL_PER_METER = (10.0 / 0.3)
-RUN_SPEED_KMPH = 5.0
+RUN_SPEED_KMPH = 8.0
 RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
 RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
 RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
@@ -22,7 +22,6 @@ class Random_drop():
         print('ran frame = ', self.frame)
         
         self.x, self.y = random.randint(0 ,700) , random.randint(300 ,600)
-        # self.image = load_image('water_drop.png')
         if Random_drop.image == None:
             Random_drop.image = load_image('img/random_drop.png')
     def update(self):
@@ -40,5 +39,7 @@ class Random_drop():
 
     def handle_collision(self, other, group):
         if group == 'eve:water':
+            other.hp -= 50
+            game_world.remove_object(self)
 
         pass
