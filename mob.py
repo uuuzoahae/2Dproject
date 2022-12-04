@@ -8,7 +8,6 @@ import random
 # 공격 받을 때, 공격이 끝났을 때를 표현하기 위한 이벤트
 HIT, HIT_END = range(2)
 
-# piece_item = None
 class IDLE:
     def enter(self,event):
         self.timer = 1000

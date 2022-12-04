@@ -4,6 +4,7 @@ import game_world
 import boss_state
 import title_state
 from fire_ball import Ball
+import eevee_ui
 
 RD, LD, RU, LU, UD, UU, DD, DU, TIMER, SPACE= range(10)
 key_event_table = {
@@ -157,6 +158,8 @@ TIME_PER_ACTION = 0.3
 ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
 FRAMES_PER_ACTION = 3
 class Eve():
+    ui = None
+
     def add_event(self, key_event):
         self.q.insert(0, key_event)
     def handle_event(self, event):
@@ -169,9 +172,8 @@ class Eve():
         self.dir = 0
         self.dirud = 0
         self.frame = 0
-
         # 캐릭터의 체력과 번개조각 수집개수 저장
-        self.hp = 500
+        self.hp = 300
         self.piece = 0
 
         self.image = load_image('img/character_eevee.png')
@@ -181,14 +183,15 @@ class Eve():
         # 이브이의 타입 저장
         self.name = 'EVE'
 
-
         self.font = load_font('font/PKMN-Mystery-Dungeon.ttf',20)
 
         self.q = []
         self.cur_state = IDLE
         self.cur_state.enter(self, None)
     def update(self):
-        global eevee_ui
+        global ui
+        ui = eevee_ui.UI(self.x, self.y, self.hp, self.piece)
+
         self.cur_state.do(self)
         if self.q:
             event = self.q.pop()
@@ -200,7 +203,7 @@ class Eve():
             game_framework.change_state(boss_state)
         if self.hp == 0:
             game_framework.change_state(title_state)
-            self.hp = 500
+            self.hp = 300
 
 
         # eevee_ui.get_info(None, self.x, self.y, self.hp, self.light)
@@ -208,9 +211,12 @@ class Eve():
         #     game_framework.change_state(boss_state)
 
     def draw(self):
+        global ui
+
+        ui.draw()
         self.cur_state.draw(self)
         # draw_rectangle(*self.get_bb())
-        # self.font.draw(self.x -10, self.y +20,'eve(hp:%3d)' %self.hp, (0,0,0) )
+        # self.font.draw(self.x -10, self.y -20,'eve(hp:%3d)' %self.hp, (0,0,0) )
 
     def fire_ball(self):
         print('FIRE BALL')
@@ -236,5 +242,3 @@ class Eve():
             self.hp -= 50
             print('eve hp = ', self.hp)
             game_world.remove_object(other)
-
-        pass
