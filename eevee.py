@@ -157,9 +157,9 @@ RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
 TIME_PER_ACTION = 0.3
 ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
 FRAMES_PER_ACTION = 3
-class Eve():
-    ui = None
 
+ui = None
+class Eve():
     def add_event(self, key_event):
         self.q.insert(0, key_event)
     def handle_event(self, event):
@@ -189,8 +189,7 @@ class Eve():
         self.cur_state = IDLE
         self.cur_state.enter(self, None)
     def update(self):
-        global ui
-        ui = eevee_ui.UI(self.x, self.y, self.hp, self.piece)
+        Eve.ui = eevee_ui.UI(self.x, self.y, self.hp, self.piece)
 
         self.cur_state.do(self)
         if self.q:
@@ -211,9 +210,7 @@ class Eve():
         #     game_framework.change_state(boss_state)
 
     def draw(self):
-        global ui
-
-        ui.draw()
+        Eve.ui.draw()
         self.cur_state.draw(self)
         # draw_rectangle(*self.get_bb())
         # self.font.draw(self.x -10, self.y -20,'eve(hp:%3d)' %self.hp, (0,0,0) )

@@ -1,13 +1,11 @@
 from pico2d import *
 import game_framework
 import random
-import light
 from water_eevee import Water_Eve
 from boss_map import Boss_Map
 from light_eevee import Light_Eve
 from fire_eevee import Fire_Eve
 from random_drop import Random_drop
-from random_eve_ui import UI
 import game_world
 import play_state
 from gyarados import Gyarados
@@ -27,8 +25,9 @@ random_eve = None
 fire_eve = None
 boss = None
 eve_attack = None
+eve_ui = None
 def enter():
-    global boss_map, eve, many_water, water, frame_time, water_eve, light_eve, fire_eve, random_eve, boss
+    global boss_map, eve, many_water, water, frame_time, water_eve, light_eve, fire_eve, random_eve, boss, eve_ui
     boss_map = Boss_Map()
     water_eve = Water_Eve()
     light_eve = Light_Eve()

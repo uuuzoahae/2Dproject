@@ -1,7 +1,6 @@
 from pico2d import *
 import game_framework
 import game_world
-import random_eve_ui
 from random_eve_attack import Ev_Ball
 
 image = None
@@ -127,6 +126,8 @@ class Water_Eve():
     def __init__(self):
         self.x, self.y = 300, 300
         self.hp = 300
+        self.ui = Boss_UI(self.x, self.y, self.hp)
+
 
         self.dir = 0
         self.dirud = 0
@@ -138,9 +139,9 @@ class Water_Eve():
         self.cur_state = RUN
         self.cur_state.enter(self, None)
 
+
     def update(water_eve):
-        global ui
-        ui = random_eve_ui.UI(water_eve.x, water_eve.y, water_eve.hp)
+        water_eve.ui = Boss_UI(water_eve.x, water_eve.y, water_eve.hp)
         water_eve.cur_state.do(water_eve)
         if water_eve.q:
 
@@ -150,8 +151,7 @@ class Water_Eve():
             water_eve.cur_state.enter(water_eve, event)
 
     def draw(self):
-        global ui
-        ui.draw()
+        self.ui.draw()
         self.cur_state.draw(self)
         # draw_rectangle(*self.get_bb())
 
@@ -173,4 +173,39 @@ class Water_Eve():
             self.hp -= 50
             print('eve hp = ', self.hp)
             game_world.remove_object(other)
+        pass
+
+class Boss_UI:
+    image = None
+    def __init__(self, x, y, hp):
+        if Boss_UI.image == None:
+            Boss_UI.image = load_image('img/heart2.png')
+
+        self.frame = 0
+        self.x = x
+        self.y = y
+        self.hp = hp
+
+
+    def draw(self):
+
+        if self.hp <= 300 and self.hp > 200:
+            self.image.clip_draw(int(self.frame),0,100,100,self.x - 18, self.y+25,22,22)
+            self.image.clip_draw(int(self.frame),0,100,100,self.x , self.y+25,22,22)
+            self.image.clip_draw(int(self.frame),0,100,100,self.x + 18, self.y+25,22,22)
+        elif self.hp <= 200 and self.hp > 100:
+            self.image.clip_draw(int(self.frame),0,100,100,self.x - 18, self.y+25,22,22)
+            self.image.clip_draw(int(self.frame),0,100,100,self.x , self.y+25,22,22)
+        elif self.hp <= 100 and self.hp > 0:
+            self.image.clip_draw(int(self.frame),0,100,100,self.x - 18, self.y+25,22,22)
+
+
+    def update(self):
+        self.frame += game_framework.frame_time
+        pass
+
+    def handle_event(self):
+        pass
+
+    def play_sound(self):
         pass
